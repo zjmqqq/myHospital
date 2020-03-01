@@ -68,3 +68,33 @@ def login(request):
 @base.checkLogin_d
 def index_doc(request):
     return render(request, 'doctor/mother_doc.html')
+
+def scheduling(request):
+    docId = request.session.get('dId')
+    day_list = Datetime.myDate()
+    sch_a = models.scheduling.objects.filter(doctor_id=docId, ap=1)
+    sch_p = models.scheduling.objects.filter(doctor_id=docId, ap=0)
+    num_list_a = [0, 0, 0, 0, 0, 0, 0]
+    num_list_p = [0, 0, 0, 0, 0, 0, 0]
+    for obj in sch_a:
+        for index, day in enumerate(day_list):
+            if obj.sTime == day:
+                num_list_a[index] = obj
+
+    for obj in sch_p:
+        for index, day in enumerate(day_list):
+            if obj.sTime == day:
+                num_list_p[index] = obj
+    doc = models.doctor.objects.get(dId=docId)
+    obj = render(request, 'doctor/scheduling_doc.html', {
+        'day_list': day_list,
+        'sch_a': num_list_a,
+        'sch_p': num_list_p,
+        'doc': doc,
+        })
+    return obj
+
+def logout(request):
+    del request.session['dName']
+    del request.session['dId']
+    return redirect('/doctor/login/')

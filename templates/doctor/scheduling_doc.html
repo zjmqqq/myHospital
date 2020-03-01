@@ -1,0 +1,33 @@
+{% extends 'doctor/mother_doc.html' %}
+{% block content %}
+<div class="container-fluid">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <td>选择日期</td>
+                {% for i in day_list %}
+                    <td>{{ i }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>上午</td>
+                {% for obj in sch_a %}
+                    {% if obj == 0 %}
+                        <td height="100">没有排班</td>
+                    {% else %}
+                        <td height="100"><a href="/patient/chooseTime/{{ obj.sId }}">余号：{{ obj.remainNumber }}</a></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>下午</td>
+                {% for obj in sch_p %}
+                    {% if obj == 0 %}
+                        <td height="100">没有排班</td>
+                    {% else %}
+                        <td height="100"><a href="/patient/chooseTime/{{ obj.sId }}">余号：{{ obj.remainNumber }}</a></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+{% endblock %}

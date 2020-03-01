@@ -20,10 +20,11 @@
     <!-- Custom styles for this template-->
     <link href="/static/patient/css/sb-admin-2.min.css" rel="stylesheet">
     <style>
-        .hide{
+        .hide {
             display: none;
         }
-        .myShadow{
+
+        .myShadow {
             position: fixed;
             left: 0;
             top: 0;
@@ -31,15 +32,16 @@
             bottom: 0;
             background-color: black;
             opacity: 0.4;
-            z-index:999;
+            z-index: 999;
         }
-        .myModal{
+
+        .myModal {
             z-index: 1000;
             position: fixed;
             left: 50%;
             top: 50%;
             height: 150px;
-            width:400px;
+            width: 400px;
             background-color: white;
             margin-left: -200px;
             margin-top: -150px;
@@ -160,7 +162,7 @@
                 </button>
 
                 <!-- Topbar Search -->
-                当前时间
+                <div id="current_time"></div>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -201,7 +203,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <input type="hidden" id="pat_id" value="{{ obj.pId }}" >
+                            <input type="hidden" id="pat_id" value="{{ obj.pId }}">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ obj.pName }}</span>
                             <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                         </a>
@@ -221,7 +223,7 @@
                                 Activity Log
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" onclick="showModal();" id="showModal"  >
+                            <a class="dropdown-item" onclick="showModal();" id="showModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>
@@ -236,96 +238,122 @@
 
             <!-- Begin Page Content -->
             {% block content %}{% endblock %}
-        <!-- End of Main Content -->
+            <!-- End of Main Content -->
 
-        <!-- Footer -->
+            <!-- Footer -->
 
-        <!-- End of Footer -->
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div id="shadow" class="myShadow hide"></div>
-<div id="logout_modal" class="myModal hide">
-    <div class="modal-header">
-
-        <h4 class="modal-title" style="float: left">注销</h4>
-      </div>
-      <div class="modal-body">
-        <p>你确定要注销吗？</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal();">取消</button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/patient/logout/'">确定</button>
-      </div>
-
-</div>
-
-
-
-<script>
-    function showModal() {
-        document.getElementById('shadow').classList.remove('hide');
-        document.getElementById('logout_modal').classList.remove('hide');
-    }
-
-    function CancelModal() {
-        document.getElementById('shadow').classList.add('hide');
-        document.getElementById('logout_modal').classList.add('hide');
-        {#document.getElementById('editModal').classList.add('hide');#}
-
-    }
-
-
-
-
-</script>
-
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+    <!-- Logout Modal-->
+    <div id="shadow" class="myShadow hide"></div>
+    <div id="logout_modal" class="myModal hide">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+
+            <h4 class="modal-title" style="float: left">注销</h4>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">
+            <p>你确定要注销吗？</p>
+        </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal();">取消</button>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/patient/logout/'">确定</button>
         </div>
-      </div>
+
     </div>
-  </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="/static/patient/vendor/jquery/jquery.min.js"></script>
-<script src="/static/patient/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-{#<script src="/static/jquery-3.3.1.js"></script>#}
-<!-- Core plugin JavaScript-->
-{#<script src="/static/patient/vendor/jquery-easing/jquery.easing.min.js"></script>#}
 
-<!-- Custom scripts for all pages-->
-<script src="/static/patient/js/sb-admin-2.min.js"></script>
+    <script type="text/javascript">
+        function showModal() {
+            document.getElementById('shadow').classList.remove('hide');
+            document.getElementById('logout_modal').classList.remove('hide');
+        }
 
-<!-- Page level plugins -->
-{#<script src="/static/patient/vendor/chart.js/Chart.min.js"></script>#}
+        function CancelModal() {
+            document.getElementById('shadow').classList.add('hide');
+            document.getElementById('logout_modal').classList.add('hide');
+            {#document.getElementById('editModal').classList.add('hide');#}
 
-<!-- Page level custom scripts -->
-{#<script src="/static/patient/js/demo/chart-area-demo.js"></script>#}
-{#<script src="/static/patient/js/demo/chart-pie-demo.js"></script>#}
+        }
 
-{% block js %}{% endblock %}
+
+        function clock() {
+            now = new Date();
+            year = now.getFullYear();
+            month = now.getMonth() + 1;
+            day = now.getDate();
+
+            today = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            week = today[now.getDay()];
+
+            hour = now.getHours();
+            min = now.getMinutes();
+            sec = now.getSeconds();
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+            if (min < 10) {
+                min = "0" + min;
+            }
+            if (sec < 10) {
+                sec = "0" + sec;
+            }
+            $("#current_time").html(
+                year + "年" + month + "月" + day + "日" + "  " + week + " " + hour + ":" + min + ":" + sec
+            );
+        }
+        setInterval(clock, 1000);
+
+
+    </script>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/patient/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/patient/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    {#<script src="/static/jquery-3.3.1.js"></script>#}
+    <!-- Core plugin JavaScript-->
+    {#<script src="/static/patient/vendor/jquery-easing/jquery.easing.min.js"></script>#}
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/patient/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    {#<script src="/static/patient/vendor/chart.js/Chart.min.js"></script>#}
+
+    <!-- Page level custom scripts -->
+    {#<script src="/static/patient/js/demo/chart-area-demo.js"></script>#}
+    {#<script src="/static/patient/js/demo/chart-pie-demo.js"></script>#}
+
+    {% block js %}{% endblock %}
 </div>
 </body>
 

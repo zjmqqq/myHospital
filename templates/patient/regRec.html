@@ -1,0 +1,101 @@
+{% extends 'patient/mother_pat.html' %}
+{% block content %}
+
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">我的预约</h1>
+        {% for obj in obj_list %}
+            <div class="col-lg-6">
+                <div class="card position-relative">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">预约记录</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-1">预约状态:</div>
+                        <div class="row">
+                            <div class="col-md-10"><h4>{{ obj.department.departmentName }} <br> {{ obj.doctor.dName }}
+                            </h4><br></div>
+                            <div class="col-md-2">
+                                {% if obj.regState %}
+                                    <h4 class="m-0 font-weight-bold text-primary" style="float: right">预约成功</h4>
+                                {% else %}
+                                    <h4 class="m-0 font-weight-bold text-primary" style="float: right">已退号</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                    {% if obj.regState %}
+                                        <button onclick="showModal_reg(x={{ obj.rId }})" type="button" class="btn btn-primary"
+                                                style="background-color:blue">
+                                            退号
+                                        </button>
+                                        <button type="button" class="btn btn-success">支付</button>
+                                    {% else %}
+                                        <h4>您已退号成功</h4>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <p class="mb-0 small">
+                        <div class="row">
+                            <div class="col-md-8"> 就诊时间{{ obj.regTime }}</div>
+                            <div class="col-md-4">就诊人：{{ obj.patients.pName }}---挂号费用:{{ obj.doctor.charge }}</div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Fade In Utility -->
+
+    <!-- 按钮触发模态框 -->
+    <div id="shadow_re" class="myShadow hide"></div>
+    <div id="withdraw_modal" class="myModal hide">
+        <div class="modal-header">
+            <h4 class="modal-title" style="float: left">退号</h4>
+        </div>
+        <div class="modal-body">
+            <p>你确定要退号吗？</p>
+        </div>
+        <form method="post" action="/patient/withdrawNum/">
+            <input type="hidden" id="regId" name="regId">
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal_reg();">取消</button>
+            <button type="submit" class="btn btn-primary">确定
+            </button>
+        </div>
+        </form>
+
+
+    </div>
+    <!-- Modal -->
+    <script>
+        function showModal_reg(x) {
+            document.getElementById('shadow_re').classList.remove('hide');
+            document.getElementById('withdraw_modal').classList.remove('hide');
+
+
+
+            $('#regId').val(x);
+
+        }
+
+        function CancelModal_reg() {
+            document.getElementById('shadow_re').classList.add('hide');
+            document.getElementById('withdraw_modal').classList.add('hide');
+            {#document.getElementById('editModal').classList.add('hide');#}
+
+        }
+
+
+
+
+    </script>
+
+{% endblock %}

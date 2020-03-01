@@ -1,0 +1,93 @@
+{% extends 'patient/mother_pat.html' %}
+{% block content %}
+    <ol class="breadcrumb">
+        {{ li|safe }}
+    </ol>
+    <div class="container-fluid">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <td>选择日期</td>
+                {% for i in day_list %}
+                    <td>{{ i }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>上午</td>
+                {% for obj in user_list_a %}
+                    {% if obj == 0 %}
+                        <td height="100">没有排班</td>
+                    {% else %}
+                        <td height="100"><a href="/patient/chooseTime/{{ obj.sId }}">余号：{{ obj.remainNumber }}</a></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>下午</td>
+                {% for obj in user_list_p %}
+                    {% if obj == 0 %}
+                        <td height="100">没有排班</td>
+                    {% else %}
+                        <td height="100"><a href="/patient/chooseTime/{{ obj.sId }}">余号：{{ obj.remainNumber }}</a></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <div class="container-fluid">
+        <div class="col-lg-6">
+
+            <div class="card position-relative">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">医生简介</h6>
+                </div>
+                <div class="card-body">
+
+                    <div class="small mb-1">{{ doc.dName }}</div>
+                    <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                        医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。按照卫生部、卫健委、医政部有关医疗卫生管理条例的法律法规，主持医患沟通，学术讨论，新技术推广、预后分析、公众教育、护理示教、康复培训、出院教育、执行卫生防疫、计生、大病早期识别干预等法律政治责任、承担部分课题研究等工作，预防出生缺陷提高人口素质，治病救人，履行病情如实告知、合理检查、合理开药、正确诊断，积极治疗的责任。
+
+                    </nav>
+                    <p class="mb-0 small">医生擅长： This utility animates the CSS transform property, meaning it will
+                        override any existing transforms on an element being animated! In this theme, the grow in
+                        animation is only being used on dropdowns within the navbar.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fade In Utility -->
+        <div class="col-lg-6">
+
+            <div class="card position-relative">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">医生评价</h6>
+                </div>
+                <div class="card-body">
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span class="badge">14</span>
+                            Cras justo odio
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge">14</span>
+                            Cras justo odio
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge">14</span>
+                            Cras justo odio
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge">14</span>
+                            Cras justo odio
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+

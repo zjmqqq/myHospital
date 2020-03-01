@@ -1,0 +1,49 @@
+{% extends 'patient/mother_pat.html' %}
+{% block content %}
+    <ol class="breadcrumb">
+            {{ li|safe }}
+        </ol>
+    <div class="about home-about">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Heading and para -->
+                    <div class="block-heading-two">
+                        <h3><span>为什么选择我们</span></h3>
+                    </div>
+
+                    <p>百年省医，坚守公益，大爱无疆。实施精准健康扶贫，开展先心病患儿救助等十多个惠民医疗救助项目。
+                        加大医疗援助力度，派出了援坦、援塞以及援藏、援疆、援青医疗队。注册志愿者7354人，社会公益工作取得明显成效。
+                        <br>积极承担社会责任，完成胶济铁路交通事故、非典、汶川地震、青岛输油管道爆炸等重大事件的救助任务以及山东儒商大会、第十一届全运会等重要活动的医疗保障任务，树立了良好的社会形象，彰显了责任担当。</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="block-heading-two">
+                        <h3><span>选择挂号类型</span></h3>
+                    </div>
+                    <!-- Accordion starts -->
+                    <button type="button" class="btn btn-primary btn-lg btn-block"
+            onclick="window.location.href='/patient/chooseDep/1' ">
+        普通
+    </button>
+                     <button type="button" class="btn btn-default btn-lg btn-block"
+            onclick="window.location.href='/patient/chooseDep/2' ">
+        专家
+    </button>
+                    </div>
+                    <!-- Accordion ends -->
+
+                </div>
+
+
+
+
+            </div>
+
+
+            <br>
+
+        </div>
+
+
+{% endblock %}

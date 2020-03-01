@@ -1,0 +1,55 @@
+{% extends 'patient/mother_pat.html' %}
+{% block content %}
+<form class="form-horizontal" method="post" action="/patient/confirm/{{ scheduling.sId }}/">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">医生姓名</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">{{ doc.dName }}</p>
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">医生类型</label>
+    <div class="col-sm-8">
+      <input type="text"  class="form-control" id="inputPassword" placeholder="{{ registerType.type }}" disabled>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">所属部门</label>
+    <div class="col-sm-8">
+      <input type="text"  class="form-control" id="inputPassword" placeholder="{{ dep.departmentName }}" disabled>
+    </div>
+  </div>
+<div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">就诊日期</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="inputPassword" placeholder="{{ scheduling.sTime }}" disabled>
+    </div>
+  </div>
+<div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">就诊费</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="inputPassword" placeholder="Password" disabled>
+    </div>
+  </div>
+<div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">就诊人</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="inputPassword" placeholder="{{ pat.pName }}" disabled>
+    </div>
+  </div>
+<div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">就诊人卡号</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="inputPassword" placeholder="{{ pat.pIdCard }}" disabled>
+    </div>
+  </div>
+    <input type="hidden" name="reInfo" value="{{ doc.dId }}_{{ dep.departmentId }}_{{ registerType.tId }}_{{ scheduling.sId }}" >
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">确认</button>
+        <a class="btn btn-default" href="#" role="button">取消</a>
+    </div>
+  </div>
+
+</form>
+{% endblock %}

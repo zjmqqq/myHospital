@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/commons.css">
+    {% block css %}{% endblock %}
+</head>
+<body>
+<div class="pg-header">
+    <div class="logo left">医生</div>
+    <div class="avatar right" style="position: relative;">
+        <img style="width: 40px;height: 40px;" src="/static/pictures/login.jpg">
+        <div class="user-info ">
+            <a>个人资料</a>
+            <a>注销</a>
+        </div>
+    </div>
+    <div class="rmenus right">
+        <a><i class="fa fa-commenting-o" aria-hidden="true"></i>消息</a>
+        <a><i class="fa fa-envelope" aria-hidden="true"></i>邮件</a>
+    </div>
+</div>
+<div class="pg-body">
+    <div class="menus">
+        <a>查看预约情况</a>
+        <a>查看病人信息</a>
+        <a>查看病人评论</a>
+    </div>
+    <div class="content">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active">Data</li>
+        </ol>
+        {% block content %}{% endblock %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% block js %}{% endblock %}
+</body>
+</html>

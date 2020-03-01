@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/commons.css">
+    {% block css %}{% endblock %}
+</head>
+<body>
+<div class="pg-header">
+    <div class="logo left">用户个人中心</div>
+    <div class="avatar right" style="position: relative;">
+        <img style="width: 40px;height: 40px;" src="/static/pictures/login.jpg">
+        <div class="user-info ">
+            <a href="/patient/index_of_p/">个人资料</a>
+            <a href="/patient/login/">注销</a>
+        </div>
+    </div>
+    <div class="rmenus right">
+        <a><i class="fa fa-commenting-o" aria-hidden="true"></i>消息</a>
+        <a><i class="fa fa-envelope" aria-hidden="true"></i>邮件</a>
+    </div>
+</div>
+<div class="pg-body">
+    <div class="menus btn-group-vertical">
+        <a href="/patient/chooseType/">生病预约</a>
+        <a href="/patient/editInfo/">修改个人信息</a>
+        <a>医生评论</a>
+        <a>我的预约</a>
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" ><a href="#">预约记录</a></li>
+            <li role="presentation"><a href="#">预约申请</a></li>
+            <li role="presentation"><a href="#">Messages</a></li>
+
+        </ul>
+        <a>我的问诊</a>
+        <a>我的钱包</a>
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" ><a href="#">Home</a></li>
+            <li role="presentation"><a href="#">Profile</a></li>
+            <li role="presentation"><a href="#">Messages</a></li>
+
+        </ul>
+    </div>
+    <div class="content">
+
+
+        {% block content %}{% endblock %}
+
+    </div>
+</div>
+{% block js %}{% endblock %}
+</body>
+</html>

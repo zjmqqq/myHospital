@@ -1,0 +1,92 @@
+{% extends 'patient/mother_pat.html' %}
+{% block css %}
+
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        {{ li|safe }}
+    </ol>
+    <div class="container-fluid">
+    <ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="/patient/chooseDoc/{{ depId }}">全部</a></li>
+        {% for key,value in day_dic.items %}
+            <li role="presentation"><a href="/patient/chooseDoc/{{ depId }}?day={{ value }}" id="{{ value }}">{{ key }}</a></li>
+        {% endfor %}
+
+</ul>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            {% for row in user_list %}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        <a href="/patient/chooseDay/{{ row.dId }}"><h4>{{ row.dName }}</h4></a>
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- Earnings (Monthly) Card Example -->
+
+        </div>
+
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-5"></div>
+            <div class="col-sm-12 col-md-7">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {{ page_info.pager|safe }}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    $(function () {
+        $('#0').click(function () {
+            $.ajax({
+                url:'/patient/chooseDoc/',
+                type: 'POST',
+                data:{
+                    'day':0,
+                    {#'name':$('#editName').val(),#}
+                    {#'class_id':$('#edit_classId').val(),#}
+                },
+                dataType:'JSON',
+                success:function (arg) {
+                    //arg = JSON.parse(arg);
+                    if (arg.status){
+                        location.reload();
+                    } else {
+                        $('#errorMsg').text(arg.message)
+                    }
+                }
+
+            })
+        })
+    })
+</script>
+{% endblock %}
+{% block js %}
+<script src="/static/jquery-3.3.1.js"></script>
+{% endblock %}
+

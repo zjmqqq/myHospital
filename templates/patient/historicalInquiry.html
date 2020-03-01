@@ -1,0 +1,69 @@
+{% extends 'patient/mother_pat.html' %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">历史问诊</h1>
+        {% for obj in obj_list %}
+            <div class="col-lg-6">
+
+                <div class="card position-relative">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">问诊记录</h6>
+
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="small mb-1">预约状态:</div>
+
+                        <div class="row">
+                            <div class="col-md-10"><h4>{{ obj.department.departmentName }} <br> {{ obj.doctor.dName }}
+                            </h4><br></div>
+                            <div class="col-md-2">
+                                {% if obj.regState %}
+                                    <h4 class="m-0 font-weight-bold text-primary" style="float: right">预约成功</h4>
+                                {% else %}
+                                    <h4 class="m-0 font-weight-bold text-primary" style="float: right">已退号</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                    {% if obj.regState %}
+                                        <button onclick="window.location.href='/patient/withdrawNum?id={{ obj.rId }}' "
+                                                type="button" class="btn btn-primary" style="background-color:blue">
+                                            退号
+                                        </button>
+                                        <button type="button" class="btn btn-success">支付</button>
+                                    {% else %}
+                                        <h4>您已退号成功</h4>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <p class="mb-0 small">
+                        <div class="row">
+                            <div class="col-md-8"> 就诊时间{{ obj.regTime }}</div>
+                            <div class="col-md-4">就诊人：{{ obj.patients.pName }}---挂号费用:{{ obj.doctor.charge }}</div>
+                        </div>
+                        <div>
+
+
+                        </div>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}

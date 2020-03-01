@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>login</title>
+        <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css">
+</head>
+<body style=" background: url('/static/pictures/login1.jpg') no-repeat center center fixed; background-size: 100%;">
+<div class="modal-dialog" style="margin-top: 10%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-center" id="myModalLabel">用户登陆</h4>
+        </div>
+        <form class="form" method="post" action="/patient/login/" novalidate>
+            <div class="modal-body" id="model-body">
+                <div class="form-group {% if form_obj.pTel.errors.0 %} has-error {% endif %}">
+                    {# 相当于注册截图中的“帐号”（下同）#}
+                    {{ form_obj.pTel.label }}
+                    {# 相当于注册截图中的文本框 （下同）#}
+                    {{ form_obj.pTel }}
+                    <span class="help-block">{{ form_obj.pTel.errors.0 }}</span>
+                </div>
+
+                <div class="form-group  {% if form_obj.pPassword.errors.0 %} has-error {% endif %}">
+                    {{ form_obj.pPassword.label }}
+                    {{ form_obj.pPassword }}
+                    <span class="help-block">{{ form_obj.pPassword.errors.0 }}</span>
+                </div>
+
+                 <div class="form-group {% if form_obj.captcha.errors.0 %} has-error {% endif %}">
+                        {{ form_obj.captcha.label_tag }}
+                        {{ form_obj.captcha }}
+                     <span class="help-block">{{ form_obj.captcha.errors.0 }}</span>
+                 </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary form-control" value="登陆" id="login"/>
+                    {{ error_msg }}
+                </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary form-control" value="注册" id="login" onclick="window.location.href='/patient/register'"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+</body>
+</html>

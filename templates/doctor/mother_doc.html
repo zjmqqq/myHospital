@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>用户个人中心</title>
+    <title>医生管理中心</title>
 
     <!-- Custom fonts for this template-->
     <link href="/static/patient/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -110,12 +110,11 @@
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Login Screens:</h6>
-                    <a class="collapse-item" href="#">查看预约情况</a>
-                    <a class="collapse-item" href="#">查看预约情况</a>
+                    <a class="collapse-item" href="/doctor/checkReg/">查看预约情况</a>
                     <div class="collapse-divider"></div>
                     <h6 class="collapse-header">我的问诊:</h6>
                     <a class="collapse-item" href="#">查看病人评论</a>
-                    <a class="collapse-item" href="#">查看病人信息</a>
+                    <a class="collapse-item" href="/doctor/checkInfo/">查看病人信息</a>
                 </div>
             </div>
         </li>
@@ -128,11 +127,7 @@
         </li>
 
         <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="fas fa-fw fa-table"></i>
-                <span>我的钱包</span></a>
-        </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -160,7 +155,7 @@
                 </button>
 
                 <!-- Topbar Search -->
-                当前时间
+                <div id="current_time"></div>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -201,8 +196,8 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <input type="hidden" id="pat_id" value="{{ obj.pId }}" >
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ obj.pName }}</span>
+
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ doc.dName }}</span>
                             <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                         </a>
                         <!-- Dropdown - User Information -->
@@ -265,7 +260,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal();">取消</button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/patient/logout/'">确定</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/doctor/logout/'">确定</button>
       </div>
 
 </div>
@@ -285,6 +280,32 @@
 
     }
 
+    function clock() {
+            now = new Date();
+            year = now.getFullYear();
+            month = now.getMonth() + 1;
+            day = now.getDate();
+
+            today = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            week = today[now.getDay()];
+
+            hour = now.getHours();
+            min = now.getMinutes();
+            sec = now.getSeconds();
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+            if (min < 10) {
+                min = "0" + min;
+            }
+            if (sec < 10) {
+                sec = "0" + sec;
+            }
+            $("#current_time").html(
+                year + "年" + month + "月" + day + "日" + "  " + week + " " + hour + ":" + min + ":" + sec
+            );
+        }
+        setInterval(clock, 1000);
 
 
 

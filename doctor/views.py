@@ -1,18 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from patient import models
-# Create your views here.
-from django.shortcuts import redirect, render,HttpResponse
-import pymysql
-from patient import models
-from utils import Pager, Datetime
-import json
+from utils import Datetime
 from utils import base
-import random
 import datetime
 from django.forms import Form
-from django.forms import fields,widgets
+from django.forms import fields, widgets
 from django.core.validators import RegexValidator
 from captcha.fields import CaptchaField
+
 
 class LoginForm(Form):
     dTel = fields.CharField(
@@ -44,36 +39,48 @@ class LoginForm(Form):
         }
     )
 
+
 def login(request):
     error_msg = ""
     form_obj = LoginForm()
     if request.method == "POST":
         form_obj = LoginForm(request.POST)
         if form_obj.is_valid():
-            dTel = form_obj.cleaned_data.get("dTel")
+            d_tel = form_obj.cleaned_data.get("dTel")
             pwd = form_obj.cleaned_data.get("dPassword")
             print(form_obj.cleaned_data)
             try:
-                obj = models.doctor.objects.get(dTel=dTel,dPassword=pwd)
+                obj = models.doctor.objects.get(dTel=d_tel, dPassword=pwd)
                 if obj:
                     request.session['dName'] = obj.dName
                     request.session['dId'] = obj.dId
                     return redirect('/doctor/index_doc')
                 else:
                     error_msg = "用户名或密码错误"
-            except:
+            except Exception as e:
+                print(e)
                 error_msg = "用户名或密码错误"
     return render(request, "doctor/login_doc.html", {"form_obj": form_obj, "error_msg": error_msg})
 
+
 @base.checkLogin_d
 def index_doc(request):
-    return render(request, 'doctor/mother_doc.html')
+    d_id = request.session.get('dId')
+    doc = models.doctor.objects.get(dId=d_id)
+    return render(request, 'doctor/index_doc.html', {'doc': doc})
+
+
+def logout(request):
+    del request.session['dName']
+    del request.session['dId']
+    return redirect('/doctor/login/')
+
 
 def scheduling(request):
-    docId = request.session.get('dId')
+    doc_id = request.session.get('dId')
     day_list = Datetime.myDate()
-    sch_a = models.scheduling.objects.filter(doctor_id=docId, ap=1)
-    sch_p = models.scheduling.objects.filter(doctor_id=docId, ap=0)
+    sch_a = models.scheduling.objects.filter(doctor_id=doc_id, ap=1)
+    sch_p = models.scheduling.objects.filter(doctor_id=doc_id, ap=0)
     num_list_a = [0, 0, 0, 0, 0, 0, 0]
     num_list_p = [0, 0, 0, 0, 0, 0, 0]
     for obj in sch_a:
@@ -85,7 +92,7 @@ def scheduling(request):
         for index, day in enumerate(day_list):
             if obj.sTime == day:
                 num_list_p[index] = obj
-    doc = models.doctor.objects.get(dId=docId)
+    doc = models.doctor.objects.get(dId=doc_id)
     obj = render(request, 'doctor/scheduling_doc.html', {
         'day_list': day_list,
         'sch_a': num_list_a,
@@ -94,7 +101,38 @@ def scheduling(request):
         })
     return obj
 
-def logout(request):
-    del request.session['dName']
-    del request.session['dId']
-    return redirect('/doctor/login/')
+
+def check_reg(request):
+    d_id = request.session.get('dId')
+    today = datetime.date.today()
+    doc = models.doctor.objects.get(dId=d_id)
+    day1 = request.GET.get('day')
+    day_list = Datetime.myDate()
+    day_dic = {}
+    for index, day in enumerate(day_list):
+        day_dic[day] = index
+    if day1:
+        day1 = int(day1)
+        print(day1)
+        print(day_list[day1])
+        # pat_list = []
+        reg_list = models.registration.objects.filter(doctor_id=d_id, regTime=day_list[day1])
+        print(reg_list)
+        # for obj in obj_list:
+        #     user_list.append(obj.doctor)
+        # print(obj_list)
+        return render(request, 'doctor/checkReg.html', {'reg_list': reg_list,
+                                                        'day_dic': day_dic,
+                                                        'doc': doc,
+                                                        })
+    else:
+        print(today)
+        reg_list = models.registration.objects.filter(doctor_id=d_id, regTime__gte=today)
+        print(reg_list)
+        return render(request, 'doctor/checkReg.html', {'reg_list': reg_list,
+                                                        'day_dic': day_dic,
+                                                        'doc': doc})
+
+
+def check_info(request):
+    pass

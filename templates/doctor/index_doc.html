@@ -1,36 +1,7 @@
-{% extends 'motherOfDoctor.html' %}
+{% extends 'doctor/mother_doc.html' %}
 {% block css %}
-    <link href="/static/css/fancybox/jquery.fancybox.css" rel="stylesheet">
-    <link href="/static/css/flexslider.css" rel="stylesheet"/>
-    <link href="/static/css/style.css" rel="stylesheet"/>
+
 {% endblock %}
 {% block content %}
-    <div class="container">
-            <div class="row">
-                <div class="skill-home">
-                    <div class="skill-home-solid clearfix">
-
-                        {% for row in dep_list %}
-                        <div class="col-md-3 text-center">
-                            <span class="icons c1"><i class="fa fa-ambulance"></i></span>
-                            <div class="box-area">
-                                <a><h3>{{ row.departmentName }}</h3></a>
-                                <p>Lorem ipsum dolor sitamet, consec tetur adipisicing elit. Dolores quae porro
-                                    consequatur aliquam, incidunt eius magni provident</p></div>
-                        </div>
-                        {% endfor %}
-
-
-
-
-                    </div>
-                </div>
-            </div>
-
-            <nav aria-label="Page navigation">
-        <ul class="pagination">
-            {{ page_info.pager|safe }}
-        </ul>
-</nav>
-        </div>
+    xxx
 {% endblock %}

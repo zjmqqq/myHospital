@@ -1,7 +1,10 @@
 from django.db import models
+
+
 class pGender(models.Model):
     sId = models.AutoField(primary_key=True, verbose_name='性别ID')
     gender = models.CharField(max_length=10,verbose_name='性别',null=True,default='')
+
 
 class patients (models.Model):
     pId = models.AutoField(primary_key=True, verbose_name='用户ID')
@@ -14,6 +17,7 @@ class patients (models.Model):
     pEmail = models.EmailField(default='',verbose_name='邮箱号')
     def __str__(self):
         return self.pName
+
 
 class doctor (models.Model):
     dId = models.AutoField(primary_key=True, verbose_name='医生ID')
@@ -32,6 +36,7 @@ class doctor (models.Model):
     def __str__(self):
         return self.dName
 
+
 class department(models.Model):
     departmentId = models.AutoField(primary_key=True, verbose_name='部门ID')
     departmentName = models.CharField(max_length=200, verbose_name='部门名字')
@@ -40,11 +45,13 @@ class department(models.Model):
     def __str__(self):
         return self.departmentName
 
+
 class registrationType(models.Model):
     tId = models.AutoField(primary_key=True, verbose_name='')
     type = models.CharField(max_length=20, verbose_name='医生类型')
     def __str__(self):
         return self.type
+
 
 class registration(models.Model):
     rId = models.AutoField(primary_key=True, verbose_name='预约ID')
@@ -58,6 +65,7 @@ class registration(models.Model):
     regState = models.BooleanField(default=True,verbose_name='预约状态')
     visitState = models.BooleanField(default=False,verbose_name='就诊状态')
 
+
 class scheduling(models.Model):
     sId = models.AutoField(primary_key=True, verbose_name='排班ID')
     doctor = models.ForeignKey('doctor', on_delete=models.CASCADE, verbose_name='医生名字')
@@ -66,7 +74,8 @@ class scheduling(models.Model):
     ap = models.BooleanField(default=True,verbose_name='上午/下午')
 
     def __str__(self):
-        return str(self.doctor)
+        return str(self.sId)
+
 
 class comment(models.Model):
     cId = models.AutoField(primary_key=True, verbose_name='评论ID')
@@ -74,6 +83,7 @@ class comment(models.Model):
     doctor = models.ForeignKey('doctor',on_delete=models.CASCADE, verbose_name='医生名称')
     patients = models.ForeignKey('patients',on_delete=models.CASCADE, verbose_name='用户名称')
     cTime = models.DateTimeField(verbose_name='评论时间')
+
 
 class contreteTime_a(models.Model):
     ctId = models.AutoField(primary_key=True)
@@ -86,6 +96,7 @@ class contreteTime_a(models.Model):
     a_11_00 = models.BooleanField(default=True,verbose_name='11:00')
     a_11_30 = models.BooleanField(default=True,verbose_name='11:30')
     scheduling_a = models.OneToOneField('scheduling',verbose_name='排班ID')
+
 
 class contreteTime_p(models.Model):
     ctId = models.AutoField(primary_key=True)

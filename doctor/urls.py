@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^logout/', views.logout),
     url(r'^index_doc/', views.index_doc),
     url(r'^scheduling/', views.scheduling),
+    url(r'^checkReg/', views.check_reg),
+    url(r'^checkInfo/', views.check_info),
 
 
 

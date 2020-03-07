@@ -1,9 +1,16 @@
 {% extends 'patient/mother_pat.html' %}
 {% block content %}
-
+    <div class="container-fluid">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="/patient/regRec/">全部</a></li>
+            {% for key,value in day_dic.items %}
+                <li role="presentation"><a href="/patient/regRec?day={{ value }}" id="{{ value }}">{{ key }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
     <div class="container-fluid">
         <h1 class="h3 mb-4 text-gray-800">我的预约</h1>
-        {% for obj in obj_list %}
+        {% for obj in reg_list %}
             <div class="col-lg-6">
                 <div class="card position-relative">
                     <div class="card-header py-3">

@@ -1,12 +1,36 @@
 {% extends 'patient/mother_pat.html' %}
 {% block content %}
+{#    <div class="container-fluid">#}
+{#        <div class="jumbotron">#}
+{#            <h1 class="text-center">最新资讯</h1>#}
+{#            <p class="text-center"></p>#}
+{##}
+{#        </div>#}
+{#    </div>#}
     <div class="container-fluid">
-        <div class="jumbotron">
-            <h1 class="text-center">Bootstrap</h1>
-            <p class="text-center">简介</p>
-            <div class="col-xs-4 col-lg-offset-4">
-                <button class="btn btn-primary btn-block">开始学习</button>
+    {% for row in news_list %}
+
+    <div class="col-lg-6 ">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">最新资讯</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                         src="/static/patient/img/{{ row.pic }}" alt="">
+                </div>
+                <p>{{ row.title }}</p>
+                <a target="_blank" rel="nofollow" href="/patient/detail?id={{ row.nId }}">详细消息 &rarr;</a>
             </div>
         </div>
+
+        <!-- Approach -->
+
+
+    </div>
+
+    {% endfor %}
     </div>
 {% endblock %}

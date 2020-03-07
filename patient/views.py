@@ -226,10 +226,24 @@ def add_data(request):
 
 @base.checkLogin_p
 def index_pat(request):
-    if request.method == 'GET':
-        p_id = request.session.get('pId')
-        obj = models.patients.objects.get(pId=p_id)
-        return render(request, 'patient/index_pat.html', {'obj': obj})
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
+    news_list = models.news.objects.all()
+    return render(request, 'patient/index_pat.html', {'obj': obj,
+                                                      'news_list': news_list})
+
+
+@base.checkLogin_p
+def detail(request):
+    n_id = request.GET.get('id')
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
+    if n_id:
+        news = models.news.objects.get(nId=n_id)
+    else:
+        news = models.news.objects.get(nId=1)
+    return render(request, 'patient/detail.html', {'obj': obj,
+                                                   'news': news})
 
 
 def register(request):
@@ -283,6 +297,8 @@ def logout(request):
 
 @base.checkLogin_p
 def edit_info(request):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     if request.method == 'GET':
         p_id = request.session.get('pId')
         # dic = models.patients.objects.filter(pId=pId).values('pName', 'pPassword','pEmail', 'pTel',
@@ -297,7 +313,9 @@ def edit_info(request):
             'pGender_id': dic.pGender_id,
             'pIdCard': dic.pIdCard,
         })
-        return render(request, 'patient/editInfo.html', {'form_obj': form_obj})
+        return render(request, 'patient/editInfo.html', {'form_obj': form_obj,
+                                                         'obj': obj,
+                                                         })
     else:
         form_obj = RegForms(request.POST)
         p_id = request.session.get('pId')
@@ -306,36 +324,51 @@ def edit_info(request):
             print(form_obj.cleaned_data)
             models.patients.objects.filter(pId=p_id).update(**form_obj.cleaned_data)
             return redirect('/patient/index_pat/')
-        return render(request, 'patient/editInfo.html', {'form_obj': form_obj})
+        return render(request, 'patient/editInfo.html', {'form_obj': form_obj,
+                                                         'obj': obj,
+                                                         })
 
 
 @base.checkLogin_p
 def choose_type(request):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     li = '<li><a href="/patient/chooseType/">医生类型</a></li>'
-    return render(request, 'patient/chooseType.html', {'li': li})
+    return render(request, 'patient/chooseType.html', {'li': li,
+                                                       'obj': obj,
+                                                       })
 
 
 @base.checkLogin_p
 def choose_dep(request, register_type):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     if request.method == "GET":
         li = '<li><a href="/patient/chooseType/">医生类型</a></li> ' \
              '<li><a href="/patient/chooseDep/'+register_type+'">部门</a></li>'
         page_count = models.department.objects.all().count()
         page_info = Pager.PageInfo(request.GET.get('page'), 8, page_count, 7, '/patient/chooseDep/'+register_type)
         dep_list = models.department.objects.all()[page_info.start(): page_info.end()]
-        obj = render(request, 'patient/chooseDep.html', {'dep_list': dep_list, 'page_info': page_info, 'li': li})
-        obj.set_cookie('registerType', register_type, max_age=6000)
-        return obj
+        obj1 = render(request, 'patient/chooseDep.html', {'dep_list': dep_list,
+                                                          'page_info': page_info,
+                                                          'obj': obj,
+                                                          'li': li})
+        obj1.set_cookie('registerType', register_type, max_age=6000)
+        return obj1
     else:
         require = request.POST.get('require')
         page_count = models.department.objects.filter(departmentName__contains=require).count()
         page_info = Pager.PageInfo(request.GET.get('page'), 9, page_count, 7, '/patient/chooseDep/'+register_type)
         dep_list = models.department.objects.filter(departmentName__contains=require)[page_info.start():page_info.end()]
-        return render(request, 'patient/chooseDep.html', {'dep_list': dep_list, 'page_info': page_info})
+        return render(request, 'patient/chooseDep.html', {'dep_list': dep_list,
+                                                          'obj': obj,
+                                                          'page_info': page_info})
 
 
 @base.checkLogin_p
 def choose_doc(request, dep_id):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     day1 = request.GET.get('day')
     register_type = request.COOKIES.get('registerType')
     print(type(day1))
@@ -356,6 +389,7 @@ def choose_doc(request, dep_id):
         return render(request, 'patient/chooseDoc.html', {'user_list': user_list,
                                                           'day_dic': day_dic,
                                                           'li': li,
+                                                          'obj': obj,
                                                           'depId': dep_id,
                                                           })
     else:
@@ -363,18 +397,21 @@ def choose_doc(request, dep_id):
         page_info = Pager.PageInfo(request.GET.get('page'), 9, page_count, 5, '/patient/chooseDoc/'+dep_id)
         user_list = models.doctor.objects.filter(department_id=dep_id,
                                                  registrationType_id=register_type)[page_info.start():page_info.end()]
-        obj = render(request, 'patient/chooseDoc.html', {'user_list': user_list,
-                                                         'page_info': page_info,
-                                                         'day_dic': day_dic,
-                                                         'li': li,
-                                                         'depId': dep_id,
-                                                         })
-        obj.set_cookie('depId', dep_id, max_age=6000)
-        return obj
+        obj1 = render(request, 'patient/chooseDoc.html', {'user_list': user_list,
+                                                          'page_info': page_info,
+                                                          'day_dic': day_dic,
+                                                          'li': li,
+                                                          'obj': obj,
+                                                          'depId': dep_id,
+                                                          })
+        obj1.set_cookie('depId', dep_id, max_age=6000)
+        return obj1
 
 
 @base.checkLogin_p
 def choose_day(request, doc_id):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     register_type = request.COOKIES.get('registerType')
     dep_id = request.COOKIES.get('depId')
     li = '<li><a href="/patient/chooseType/">医生类型</a></li> ' \
@@ -396,18 +433,21 @@ def choose_day(request, doc_id):
             if obj.sTime == day:
                 num_list_p[index] = obj
     doc = models.doctor.objects.get(dId=doc_id)
-    obj = render(request, 'patient/chooseDay.html', {
+    obj1 = render(request, 'patient/chooseDay.html', {
         'day_list': day_list,
         'user_list_a': num_list_a,
         'user_list_p': num_list_p,
+        'obj': obj,
         'doc': doc,
         'li': li})
-    obj.set_cookie('docId', doc_id, max_age=6000)
-    return obj
+    obj1.set_cookie('docId', doc_id, max_age=6000)
+    return obj1
 
 
 @base.checkLogin_p
 def choose_time(request, s_id):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     register_type = request.COOKIES.get('registerType')
     doc_id = request.COOKIES.get('docId')
     dep_id = request.COOKIES.get('depId')
@@ -424,11 +464,12 @@ def choose_time(request, s_id):
                                                                                  'a_10_00', 'a_10_30', 'a_11_00',
                                                                                  'a_11_30').first()
         obj_time = models.contreteTime_a.objects.get(scheduling_a=s_id)
-        obj = render(request, 'patient/chooseTime.html', {'obj_dic': obj_dic,
-                                                          'obj_sch': obj_sch,
-                                                          'li': li})
-        obj.set_cookie('ctId', obj_time.ctId, max_age=60000)
-        return obj
+        obj1 = render(request, 'patient/chooseTime.html', {'obj_dic': obj_dic,
+                                                           'obj_sch': obj_sch,
+                                                           'obj': obj,
+                                                           'li': li})
+        obj1.set_cookie('ctId', obj_time.ctId, max_age=60000)
+        return obj1
     else:
         print('p')
         obj_dic = models.contreteTime_p.objects.filter(scheduling_p=s_id).values('p_13_30', 'p_14_00', 'p_14_30',
@@ -436,15 +477,18 @@ def choose_time(request, s_id):
                                                                                  'p_16_30',).first()
 
         obj_time = models.contreteTime_p.objects.get(scheduling_p=s_id)
-        obj = render(request, 'patient/chooseTime.html', {'obj_dic': obj_dic,
-                                                          'obj_sch': obj_sch,
-                                                          'li': li})
-        obj.set_cookie('ctId', obj_time.ctId, max_age=60000)
-        return obj
+        obj1 = render(request, 'patient/chooseTime.html', {'obj_dic': obj_dic,
+                                                           'obj_sch': obj_sch,
+                                                           'obj': obj,
+                                                           'li': li})
+        obj1.set_cookie('ctId', obj_time.ctId, max_age=60000)
+        return obj1
 
 
 @base.checkLogin_p
 def confirm(request, s_id):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
     if request.method == "GET":
         doc_id = request.COOKIES.get('docId')
         dep_id = request.COOKIES.get('depId')
@@ -468,6 +512,7 @@ def confirm(request, s_id):
         return render(request, 'patient/confirm.html', {'doc': doc,
                                                         'dep': dep,
                                                         'pat': pat,
+                                                        'obj': obj,
                                                         'registerType': register_type,
                                                         'scheduling': scheduling,
                                                         'time1': time1,
@@ -518,12 +563,35 @@ def confirm(request, s_id):
         return redirect('/patient/index_pat/')
 
 
+@base.checkLogin_p
 def reg_rec(request):
     p_id = request.session.get('pId')
-    obj_list = models.registration.objects.filter(patients__pId=p_id)
-    return render(request, 'patient/regRec.html', {'obj_list': obj_list})
+    obj = models.patients.objects.get(pId=p_id)
+    day1 = request.GET.get('day')
+    p_id = request.session.get('pId')
+    print(type(day1))
+    day_list = Datetime.myDate()
+    day_dic = {}
+    for index, day in enumerate(day_list):
+        day_dic[day] = index
+    if day1:
+        day1 = int(day1)
+        print(day_list[day1])
+        reg_list = models.registration.objects.filter(patients__pId=p_id, regTime=day_list[day1])
+        print(reg_list)
+        return render(request, 'patient/regRec.html', {'reg_list': reg_list,
+                                                       'day_dic': day_dic,
+                                                       'obj': obj,
+                                                       })
+    else:
+        reg_list = models.registration.objects.filter(patients__pId=p_id)
+        return render(request, 'patient/regRec.html', {'reg_list': reg_list,
+                                                       'day_dic': day_dic,
+                                                       'obj': obj,
+                                                       })
 
 
+@base.checkLogin_p
 def withdraw_num(request):
     reg_id = request.POST.get('regId')
     try:
@@ -534,17 +602,12 @@ def withdraw_num(request):
     return redirect('/patient/regRec/')
 
 
+@base.checkLogin_p
 def historical_inquiry(request):
-    return render(request, 'patient/historicalInquiry.html')
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
+    return render(request, 'patient/historicalInquiry.html', {'obj': obj,
+                                                              })
 
 
-def my_try(request):
-    page_count = models.department.objects.all().count()
-    page_info = Pager.PageInfo(request.GET.get('page'), 8, page_count, 7, '/patient/myTry')
-    dep_list = models.department.objects.all()[page_info.start():page_info.end()]
-    obj = render(request, 'doctor/index_doc.html', {'dep_list': dep_list, 'page_info': page_info})
-    return obj
 
-
-def test(request):
-    return render(request, 'patient/test.html')

@@ -110,5 +110,10 @@ class contreteTime_p(models.Model):
     scheduling_p = models.OneToOneField('scheduling',verbose_name='排班ID')
 
 
-
+class news(models.Model):
+    nId =models.AutoField(primary_key=True)
+    pic = models.CharField(max_length=100)
+    title = models.CharField(max_length=25)
+    content = models.CharField(max_length=1000)
+    publishTime = models.DateField()
 

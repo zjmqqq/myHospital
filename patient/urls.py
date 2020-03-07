@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^logout/', views.logout),
     url(r'^register/', views.register),
     url(r'^index_pat/', views.index_pat),
+    url(r'^detail/', views.detail),
     url(r'^editInfo/', views.edit_info),
     url(r'^regRec/', views.reg_rec),
     url(r'^withdrawNum/', views.withdraw_num),
@@ -19,5 +20,4 @@ urlpatterns = [
     url(r'^chooseDay/(\w+)', views.choose_day),
     url(r'^chooseTime/(\w+)', views.choose_time),
     url(r'^confirm/(\w+)', views.confirm),
-    url(r'^test', views.test)
 ]

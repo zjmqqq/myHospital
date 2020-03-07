@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import patients,doctor,department,registrationType,registration,scheduling,comment,pGender,contreteTime_a,contreteTime_p
+from .models import patients,doctor,department,registrationType,registration,scheduling,\
+    comment,pGender,contreteTime_a,contreteTime_p,news
 class patientsAdmin(admin.ModelAdmin):
     list_display = ('pId', 'pName', 'pPassword','pGender','pIdCard','pTel','pEmail')
     search_fields = ('pId', 'pName', 'pPassword','pGender','pIdCard','pTel','pEmail')
@@ -52,6 +53,12 @@ class contreteTime_pAdmin(admin.ModelAdmin):
     search_fields = ('ctId', 'p_13_30','p_14_00', 'p_14_30','p_15_00', 'p_15_30','p_16_00', 'p_16_30','scheduling_p')
     ordering = ('ctId',)
 
+
+class newsAdmin(admin.ModelAdmin):
+    list_display = ('nId', 'pic','title', 'content','publishTime')
+    search_fields = ('nId', 'pic','title', 'content','publishTime')
+    ordering = ('nId',)
+
 admin.site.register(patients,patientsAdmin)
 admin.site.register(doctor,doctorAdmin)
 admin.site.register(department,departmentAdmin)
@@ -62,4 +69,5 @@ admin.site.register(comment,commentAdmin)
 admin.site.register(pGender,pGenderAdmin)
 admin.site.register(contreteTime_a,contreteTime_aAdmin)
 admin.site.register(contreteTime_p,contreteTime_pAdmin)
+admin.site.register(news,newsAdmin)
 

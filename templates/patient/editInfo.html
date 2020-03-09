@@ -1,5 +1,8 @@
 {% extends 'patient/mother_pat.html' %}
 {% block content %}
+    <div class="container-fluid">
+    <h1>修改个人信息</h1>
+
     <form class="form" method="post" action="/patient/editInfo/" novalidate>
             <div class="modal-body" id="model-body">
                 <div class="form-group {% if form_obj.pName.errors.0 %} has-error {% endif %}">
@@ -47,4 +50,6 @@
                 </div>
             </div>
         </form>
+
+    </div>
 {% endblock %}

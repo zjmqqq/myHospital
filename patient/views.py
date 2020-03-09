@@ -143,6 +143,17 @@ class RegForms(Form):
     # )
 
 
+class CommentForms(Form):
+    content = fields.CharField(
+        label="请输入评论：",
+        # 自定义类的属性
+        widget=widgets.Textarea(attrs={"class": "form-control"}),
+        error_messages={
+            "required": "评论不能为空",
+        }
+    )
+
+
 def add_data(request):
     # 增加
     # models.userType.objects.create(title='一级用户')
@@ -606,8 +617,34 @@ def withdraw_num(request):
 def historical_inquiry(request):
     p_id = request.session.get('pId')
     obj = models.patients.objects.get(pId=p_id)
+    his_list = models.registration.objects.filter(patients_id=p_id, visitState=True)
+    print(his_list)
     return render(request, 'patient/historicalInquiry.html', {'obj': obj,
+                                                              'his_list': his_list,
                                                               })
 
 
-
+@base.checkLogin_p
+def evaluate(request):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
+    if request.method == 'GET':
+        r_id = request.GET.get('id')
+        form_obj = CommentForms()
+        temp = render(request, "patient/evaluate.html", {"form_obj": form_obj,
+                                                         "obj": obj,
+                                                         })
+        temp.set_cookie('comment_id', r_id, max_age=6000)
+        return temp
+    else:
+        form_obj = CommentForms(request.POST)
+        now_time = datetime.datetime.now()
+        r_id = request.COOKIES.get('comment_id')
+        reg = models.registration.objects.get(rId=r_id)
+        if form_obj.is_valid():
+            content = form_obj.cleaned_data.get("content")
+            models.comment.objects.create(content=content, cTime=now_time, doctor_id=reg.doctor_id, patients_id=reg.patients_id)
+            return redirect('/patient/index_pat/')
+        return render(request, "patient/evaluate.html", {"form_obj": form_obj,
+                                                         "obj": obj,
+                                                         })

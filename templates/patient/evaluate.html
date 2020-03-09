@@ -1,0 +1,25 @@
+{% extends 'patient/mother_pat.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <h1>用户评价</h1>
+    </div>
+
+    <div class="container-fluid">
+    <form class="form" method="post" action="/patient/evaluate/" novalidate>
+        <div class="modal-body" id="model-body">
+            <div class="form-group {% if form_obj.content.errors.0 %} has-error {% endif %}">
+                {# 相当于注册截图中的“帐号”（下同）#}
+                <h5>{{ form_obj.content.label }}</h5>
+                {# 相当于注册截图中的文本框 （下同）#}
+                {{ form_obj.content }}
+                <span class="help-block">{{ form_obj.content.errors.0 }}</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary form-control" value="提交" id="login"/>
+            </div>
+        </div>
+    </form>
+    </div>
+{% endblock %}

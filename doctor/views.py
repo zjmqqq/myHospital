@@ -135,4 +135,15 @@ def check_reg(request):
 
 
 def check_info(request):
-    pass
+    today = datetime.date.today()
+    doc_id = request.session.get('dId')
+    doc = models.doctor.objects.get(dId=doc_id)
+    reg_list = models.registration.objects.filter(doctor_id=doc_id, regTime__gte=today)
+    return render(request, 'doctor/check_info.html', {'doc': doc,
+                                                      'reg_list': reg_list,
+                                                      })
+
+
+def visit(request, reg_id):
+    models.registration.objects.filter(rId=reg_id).update(visitState=1)
+    return redirect('/doctor/checkReg/')

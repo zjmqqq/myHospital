@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^regRec/', views.reg_rec),
     url(r'^withdrawNum/', views.withdraw_num),
     url(r'^historicalInquiry/', views.historical_inquiry),
+    url(r'^evaluate/', views.evaluate),
     url(r'^addData/', views.add_data),
     url(r'^chooseType/', views.choose_type),
     url(r'^chooseDep/(\w+)', views.choose_dep),

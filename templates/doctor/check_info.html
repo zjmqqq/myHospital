@@ -1,0 +1,40 @@
+{% extends 'doctor/mother_doc.html' %}
+{% block css %}
+
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div>
+            <h1>已预约患者信息表</h1>
+        </div>
+
+        <div>
+            <table class="table table-hover table-borderless">
+                <tr>
+                    <td><h2>编号</h2></td>
+                    <td><h2>姓名</h2></td>
+                    <td><h2>手机号</h2></td>
+                    <td><h2>性别</h2></td>
+                    <td><h2>就诊时间</h2></td>
+                </tr>
+                {% for row in reg_list %}
+                <tr>
+                    <td>{{ row.patients_id }}</td>
+                    <td>{{ row.patients.pName }}</td>
+                    <td>{{ row.patients.pTel }}</td>
+                    <td>{{ row.patients.pGender.gender }}</td>
+                    <td>
+                        {{ row.regTime }}__
+                        {% if row.ap == 1 %}
+                            上午
+                        {% else %}
+                            下午
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

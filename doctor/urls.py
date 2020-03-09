@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^index_doc/', views.index_doc),
     url(r'^scheduling/', views.scheduling),
     url(r'^checkReg/', views.check_reg),
+    url(r'^visit/(\w+)', views.visit),
     url(r'^checkInfo/', views.check_info),
 
 

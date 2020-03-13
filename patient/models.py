@@ -63,7 +63,7 @@ class registration(models.Model):
     regState = models.BooleanField(default=True,verbose_name='预约状态')
     visitState = models.BooleanField(default=False,verbose_name='就诊状态')
     evaluateState = models.BooleanField(default=False,verbose_name='是否评论')
-    evaluate = models.OneToOneField('comment',on_delete=models.CASCADE,verbose_name='评论',default='')
+
     # evaluateState = models.ForeignKey('comment', on_delete=models.CASCADE, verbose_name='评论')
 
 
@@ -83,6 +83,7 @@ class comment(models.Model):
     content = models.CharField(max_length=200,verbose_name='评论内容')
     doctor = models.ForeignKey('doctor',on_delete=models.CASCADE, verbose_name='医生名称')
     patients = models.ForeignKey('patients',on_delete=models.CASCADE, verbose_name='用户名称')
+    registration = models.OneToOneField('registration', on_delete=models.CASCADE, verbose_name='预约',default='')
     cTime = models.DateTimeField(verbose_name='评论时间')
 
 

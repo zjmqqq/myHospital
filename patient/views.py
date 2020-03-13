@@ -97,7 +97,7 @@ class RegForms(Form):
         # choices=(models.gender.objects.all().values_list('sId','sex')),
         label="性别",
         initial=1,
-        widget=widgets.RadioSelect(choices=(models.pGender.objects.all().values_list('sId', 'gender')))
+        widget=widgets.RadioSelect(choices=(models.sexual.objects.all().values_list('sId', 'gender')))
         # widget=widgets.RadioSelect(choices=((1, "篮球"), (2, "足球"), (3, "双色球"),))
     )
 
@@ -644,6 +644,7 @@ def evaluate(request):
         if form_obj.is_valid():
             content = form_obj.cleaned_data.get("content")
             models.comment.objects.create(content=content, cTime=now_time, doctor_id=reg.doctor_id, patients_id=reg.patients_id)
+            models.registration.objects.filter(rId=r_id).update(evaluateState=True)
             return redirect('/patient/index_pat/')
         return render(request, "patient/evaluate.html", {"form_obj": form_obj,
                                                          "obj": obj,

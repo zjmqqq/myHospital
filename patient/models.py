@@ -1,16 +1,14 @@
 from django.db import models
-
-
-class pGender(models.Model):
+class sexual(models.Model):
     sId = models.AutoField(primary_key=True, verbose_name='性别ID')
-    gender = models.CharField(max_length=10,verbose_name='性别',null=True,default='')
+    gender = models.CharField(max_length=10, verbose_name='性别')
 
 
 class patients (models.Model):
     pId = models.AutoField(primary_key=True, verbose_name='用户ID')
     pName = models.CharField(max_length=200, verbose_name='用户姓名')
     pPassword = models.CharField(max_length=200, verbose_name='用户密码')
-    pGender = models.ForeignKey('pGender',verbose_name='用户性别',default=1)
+    pGender = models.ForeignKey('sexual',verbose_name='用户性别',default='')
     pIdCard = models.CharField(max_length=200, verbose_name='用户身份证号')
     pTel = models.CharField(max_length=200, unique=True, verbose_name='用户手机号码')
     balance = models.IntegerField(default=0, verbose_name='余额')
@@ -64,6 +62,9 @@ class registration(models.Model):
     department = models.ForeignKey('department', on_delete=models.CASCADE, verbose_name='部门名称')
     regState = models.BooleanField(default=True,verbose_name='预约状态')
     visitState = models.BooleanField(default=False,verbose_name='就诊状态')
+    evaluateState = models.BooleanField(default=False,verbose_name='是否评论')
+    evaluate = models.OneToOneField('comment',on_delete=models.CASCADE,verbose_name='评论',default='')
+    # evaluateState = models.ForeignKey('comment', on_delete=models.CASCADE, verbose_name='评论')
 
 
 class scheduling(models.Model):
@@ -116,4 +117,5 @@ class news(models.Model):
     title = models.CharField(max_length=25)
     content = models.CharField(max_length=1000)
     publishTime = models.DateField()
+
 

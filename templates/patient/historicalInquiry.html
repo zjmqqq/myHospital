@@ -21,14 +21,18 @@
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                    <button onclick="window.location.href='/patient/evaluate?id={{ obj.rId }}' "
-                                            type="button" class="btn btn-primary" style="background-color:blue">
-                                        立即评价
-                                    </button>
-                                    <button type="button" class="btn btn-success"
-                                            onclick="showModal_reg(x={{ obj.rId }})">
-                                        查看详情
-                                    </button>
+                                    {% if obj.evaluateState %}
+
+                                    {% else %}
+                                        <button onclick="window.location.href='/patient/evaluate?id={{ obj.rId }}' "
+                                                type="button" class="btn btn-primary" style="background-color:blue">
+                                            立即评价
+                                        </button>
+                                        <button type="button" class="btn btn-success"
+                                                onclick="showModal_reg(x={{ obj.rId }})">
+                                            查看详情
+                                        </button>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-md-4"></div>

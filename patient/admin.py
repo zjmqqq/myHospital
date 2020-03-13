@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import patients,doctor,department,registrationType,registration,scheduling,\
-    comment,pGender,contreteTime_a,contreteTime_p,news
+    comment,contreteTime_a,contreteTime_p,news,sexual
 class patientsAdmin(admin.ModelAdmin):
-    list_display = ('pId', 'pName', 'pPassword','pGender','pIdCard','pTel','pEmail')
-    search_fields = ('pId', 'pName', 'pPassword','pGender','pIdCard','pTel','pEmail')
+    list_display = ('pId', 'pName', 'pPassword','pIdCard','pTel','pEmail')
+    search_fields = ('pId', 'pName', 'pPassword','pIdCard','pTel','pEmail')
     # list_display = ('pId', 'pName', 'pPassword', 'pIdCard', 'pTel', 'pEmail')
     # search_fields = ('pId', 'pName', 'pPassword', 'pIdCard', 'pTel', 'pEmail')
     ordering = ('pId', )
@@ -38,7 +38,7 @@ class commentAdmin(admin.ModelAdmin):
     search_fields = ('cId', 'doctor', 'patients','content','cTime')
     ordering = ('cId',)
 
-class pGenderAdmin(admin.ModelAdmin):
+class sexualAdmin(admin.ModelAdmin):
     list_display = ('sId', 'gender')
     search_fields = ('sId', 'gender')
     ordering = ('sId',)
@@ -66,7 +66,7 @@ admin.site.register(registrationType,registrationTypeAdmin)
 admin.site.register(registration,registrationAdmin)
 admin.site.register(scheduling,schedulingAdmin)
 admin.site.register(comment,commentAdmin)
-admin.site.register(pGender,pGenderAdmin)
+admin.site.register(sexual,sexualAdmin)
 admin.site.register(contreteTime_a,contreteTime_aAdmin)
 admin.site.register(contreteTime_p,contreteTime_pAdmin)
 admin.site.register(news,newsAdmin)

@@ -3,6 +3,9 @@ class sexual(models.Model):
     sId = models.AutoField(primary_key=True, verbose_name='性别ID')
     gender = models.CharField(max_length=10, verbose_name='性别')
 
+    def __str__(self):
+        return self.gender
+
 
 class patients (models.Model):
     pId = models.AutoField(primary_key=True, verbose_name='用户ID')
@@ -63,7 +66,8 @@ class registration(models.Model):
     regState = models.BooleanField(default=True,verbose_name='预约状态')
     visitState = models.BooleanField(default=False,verbose_name='就诊状态')
     evaluateState = models.BooleanField(default=False,verbose_name='是否评论')
-
+    def __str__(self):
+        return str(self.rId)
     # evaluateState = models.ForeignKey('comment', on_delete=models.CASCADE, verbose_name='评论')
 
 
@@ -75,7 +79,7 @@ class scheduling(models.Model):
     ap = models.BooleanField(default=True,verbose_name='上午/下午')
 
     def __str__(self):
-        return str(self.sId)
+        return str(self.doctor)+'-'+str(self.sTime)+'-'+str(self.ap)
 
 
 class comment(models.Model):
@@ -85,7 +89,8 @@ class comment(models.Model):
     patients = models.ForeignKey('patients',on_delete=models.CASCADE, verbose_name='用户名称')
     registration = models.OneToOneField('registration', on_delete=models.CASCADE, verbose_name='预约',default='')
     cTime = models.DateTimeField(verbose_name='评论时间')
-
+    def __str__(self):
+        return str(self.patients)+'-'+str(self.doctor)
 
 class contreteTime_a(models.Model):
     ctId = models.AutoField(primary_key=True)
@@ -98,7 +103,8 @@ class contreteTime_a(models.Model):
     a_11_00 = models.BooleanField(default=True,verbose_name='11:00')
     a_11_30 = models.BooleanField(default=True,verbose_name='11:30')
     scheduling_a = models.OneToOneField('scheduling',verbose_name='排班ID')
-
+    def __str__(self):
+        return str(self.ctId)+'-'+str(self.scheduling_a)
 
 class contreteTime_p(models.Model):
     ctId = models.AutoField(primary_key=True)
@@ -110,7 +116,8 @@ class contreteTime_p(models.Model):
     p_16_00 = models.BooleanField(default=True,verbose_name='16:00')
     p_16_30 = models.BooleanField(default=True,verbose_name='16:30')
     scheduling_p = models.OneToOneField('scheduling',verbose_name='排班ID')
-
+    def __str__(self):
+        return str(self.ctId)+'-'+str(self.scheduling_p)
 
 class news(models.Model):
     nId =models.AutoField(primary_key=True)
@@ -118,5 +125,6 @@ class news(models.Model):
     title = models.CharField(max_length=25)
     content = models.CharField(max_length=1000)
     publishTime = models.DateField()
-
+    def __str__(self):
+        return str(self.nId)+'-'+str(self.title)
 

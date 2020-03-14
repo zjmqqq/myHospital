@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^withdrawNum/', views.withdraw_num),
     url(r'^historicalInquiry/', views.historical_inquiry),
     url(r'^evaluate/', views.evaluate),
+    url(r'^myEval/', views.my_eval),
+    url(r'^eval_doctor/', views.eval_doctor),
     url(r'^addData/', views.add_data),
     url(r'^chooseType/', views.choose_type),
     url(r'^chooseDep/(\w+)', views.choose_dep),

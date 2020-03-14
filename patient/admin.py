@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import patients,doctor,department,registrationType,registration,scheduling,\
     comment,contreteTime_a,contreteTime_p,news,sexual
 class patientsAdmin(admin.ModelAdmin):
-    list_display = ('pId', 'pName', 'pPassword','pIdCard','pTel','pEmail')
-    search_fields = ('pId', 'pName', 'pPassword','pIdCard','pTel','pEmail')
+    list_display = ('pId', 'pName', 'pPassword','pIdCard','pTel','pEmail','pGender')
+    search_fields = ('pId', 'pName', 'pPassword','pIdCard','pTel','pEmail','pGender')
     # list_display = ('pId', 'pName', 'pPassword', 'pIdCard', 'pTel', 'pEmail')
     # search_fields = ('pId', 'pName', 'pPassword', 'pIdCard', 'pTel', 'pEmail')
     ordering = ('pId', )
@@ -24,8 +24,8 @@ class registrationTypeAdmin(admin.ModelAdmin):
     ordering = ('tId',)
 
 class registrationAdmin(admin.ModelAdmin):
-    list_display = ('rId', 'subTime','regTime','ap', 'patients', 'doctor', 'type', 'department')
-    search_fields = ('rId', 'subTime','regTime','ap', 'patients', 'doctor', 'type', 'department')
+    list_display = ('rId', 'subTime','regTime','ap', 'patients', 'doctor', 'type', 'department','regState','visitState','evaluateState')
+    search_fields = ('rId', 'subTime','regTime','ap', 'patients', 'doctor', 'type', 'department','regState','visitState','evaluateState')
     ordering = ('rId',)
 
 class schedulingAdmin(admin.ModelAdmin):

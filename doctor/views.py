@@ -7,6 +7,7 @@ from django.forms import Form
 from django.forms import fields, widgets
 from django.core.validators import RegexValidator
 from captcha.fields import CaptchaField
+from utils import Pager
 
 
 class LoginForm(Form):
@@ -76,6 +77,7 @@ def logout(request):
     return redirect('/doctor/login/')
 
 
+@base.checkLogin_d
 def scheduling(request):
     doc_id = request.session.get('dId')
     day_list = Datetime.myDate()
@@ -102,6 +104,7 @@ def scheduling(request):
     return obj
 
 
+@base.checkLogin_d
 def check_reg(request):
     d_id = request.session.get('dId')
     today = datetime.date.today()
@@ -134,6 +137,7 @@ def check_reg(request):
                                                         'doc': doc})
 
 
+@base.checkLogin_d
 def check_info(request):
     today = datetime.date.today()
     doc_id = request.session.get('dId')
@@ -144,6 +148,21 @@ def check_info(request):
                                                       })
 
 
+@base.checkLogin_d
 def visit(request, reg_id):
     models.registration.objects.filter(rId=reg_id).update(visitState=1)
     return redirect('/doctor/checkReg/')
+
+
+@base.checkLogin_d
+def view_comment(request):
+    doc_id = request.session.get('dId')
+    doc = models.doctor.objects.get(dId=doc_id)
+    page_count = models.comment.objects.filter(doctor_id=doc_id).count()
+    page_info = Pager.PageInfo(request.GET.get('page'), 8, page_count, 7, '/doctor/view_comment/')
+    comment_list = models.comment.objects.filter(doctor_id=doc_id)[page_info.start(): page_info.end()]
+    obj1 = render(request, 'doctor/view_comment.html', {'comment_list': comment_list,
+                                                    'page_info': page_info,
+                                                    'doc': doc,
+                                                    })
+    return obj1

@@ -165,23 +165,22 @@ def add_data(request):
     # models.userInfo.objects.create(name='赵柳',age=18,ut_id_id=1)
     # models.userInfo.objects.create(name='黄芪',age=18,ut_id_id=2)
     # for i in range(50):
-    #     name = 'department'+str(i)
+    #     name = '科室'+str(i)
     #     models.department.objects.create(departmentName=name)
-    # for i in range(100):
-    #     name = 'doctor' + str(i)
-    #     IdCard = str(331082199809140000+i)
-    #     Tel = str(13958590000+i)
-    #     department_id = random.randint(1,10)
-    #     registrationType_id = random.randint(1,2)
-    #     models.doctor.objects.create(dName=name,dPassword=123456,
-    #                                  dGender='男',dIdcard=IdCard,
-    #                                  dBirthday='19890612',dTel=Tel,
-    #                                  department_id=department_id,
-    #                                  registrationType_id=registrationType_id,
-    #                                  dIntroduce='医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。按照卫生部、卫健委、医政部有关医疗卫生管理条例的法律法规，主持医患沟通，学术讨论，新技术推广、预后分析、公众教育、护理示教、康复培训、出院教育、执行卫生防疫、计生、大病早期识别干预等法律政治责任、承担部分课题研究等工作，预防出生缺陷提高人口素质，治病救人，履行病情如实告知、合理检查、合理开药、正确诊断，积极治疗的责任。',
-    #                                  dSpecial='This utility animates the CSS transform property,
-    #                                  meaning it will override any existing transforms on an element being animated!
-    #                                  In this theme')
+    import random
+    for i in range(100):
+        name = 'doctor' + str(i) + '医生'
+        IdCard = str(331082199809140000+i)
+        Tel = str(13958590000+i)
+        department_id = random.randint(1,10)
+        registrationType_id = random.randint(1,2)
+        models.doctor.objects.create(dName=name,dPassword=123456,
+                                     dGender='男',dIdcard=IdCard,
+                                     dBirthday='19890612',dTel=Tel,
+                                     department_id=department_id,
+                                     registrationType_id=registrationType_id,
+                                     dIntroduce='医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。按照卫生部、卫健委、医政部有关医疗卫生管理条例的法律法规，主持医患沟通，学术讨论，新技术推广、预后分析、公众教育、护理示教、康复培训、出院教育、执行卫生防疫、计生、大病早期识别干预等法律政治责任、承担部分课题研究等工作，预防出生缺陷提高人口素质，治病救人，履行病情如实告知、合理检查、合理开药、正确诊断，积极治疗的责任。',
+                                     dSpecial='This utility animates the CSS transform property,meaning it will override any existing transforms on an element being animated!In this theme')
     # 查询 queryset = [obj1,obj2,...]  正向操作
     # result = models.userInfo.objects.all()
     # for obj in result:
@@ -239,7 +238,7 @@ def add_data(request):
 def index_pat(request):
     p_id = request.session.get('pId')
     obj = models.patients.objects.get(pId=p_id)
-    news_list = models.news.objects.all()
+    news_list = models.news.objects.all().order_by('-publishTime')[:4]
     return render(request, 'patient/index_pat.html', {'obj': obj,
                                                       'news_list': news_list})
 
@@ -444,10 +443,12 @@ def choose_day(request, doc_id):
             if obj.sTime == day:
                 num_list_p[index] = obj
     doc = models.doctor.objects.get(dId=doc_id)
+    comment_list = models.comment.objects.filter(doctor_id=doc_id)
     obj1 = render(request, 'patient/chooseDay.html', {
         'day_list': day_list,
         'user_list_a': num_list_a,
         'user_list_p': num_list_p,
+        'comment_list': comment_list,
         'obj': obj,
         'doc': doc,
         'li': li})
@@ -640,12 +641,31 @@ def evaluate(request):
         form_obj = CommentForms(request.POST)
         now_time = datetime.datetime.now()
         r_id = request.COOKIES.get('comment_id')
+        print(r_id)
         reg = models.registration.objects.get(rId=r_id)
         if form_obj.is_valid():
             content = form_obj.cleaned_data.get("content")
-            models.comment.objects.create(content=content, cTime=now_time, doctor_id=reg.doctor_id, patients_id=reg.patients_id)
+            models.comment.objects.create(content=content, cTime=now_time, registration_id=reg.rId,
+                                          doctor_id=reg.doctor_id, patients_id=reg.patients_id)
             models.registration.objects.filter(rId=r_id).update(evaluateState=True)
-            return redirect('/patient/index_pat/')
+            return redirect('/patient/myEval/')
         return render(request, "patient/evaluate.html", {"form_obj": form_obj,
                                                          "obj": obj,
                                                          })
+
+
+def my_eval(request):
+    p_id = request.session.get('pId')
+    obj = models.patients.objects.get(pId=p_id)
+    page_count = models.comment.objects.filter(patients_id=p_id).count()
+    page_info = Pager.PageInfo(request.GET.get('page'), 8, page_count, 7, '/patient/myEval/')
+    comment_list = models.comment.objects.filter(patients_id=p_id)[page_info.start(): page_info.end()]
+    obj1 = render(request, 'patient/my_eval.html', {'comment_list': comment_list,
+                                                    'page_info': page_info,
+                                                    'obj': obj,
+                                                    })
+    return obj1
+
+
+def eval_doctor(request):
+    pass

@@ -44,12 +44,9 @@
 
                     <div class="small mb-1">{{ doc.dName }}</div>
                     <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                        医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。按照卫生部、卫健委、医政部有关医疗卫生管理条例的法律法规，主持医患沟通，学术讨论，新技术推广、预后分析、公众教育、护理示教、康复培训、出院教育、执行卫生防疫、计生、大病早期识别干预等法律政治责任、承担部分课题研究等工作，预防出生缺陷提高人口素质，治病救人，履行病情如实告知、合理检查、合理开药、正确诊断，积极治疗的责任。
-
+                        {{ doc.dIntroduce }}
                     </nav>
-                    <p class="mb-0 small">医生擅长： This utility animates the CSS transform property, meaning it will
-                        override any existing transforms on an element being animated! In this theme, the grow in
-                        animation is only being used on dropdowns within the navbar.</p>
+                    <p class="mb-0 small">医生擅长： {{ doc.dSpecial }}</p>
                 </div>
             </div>
 
@@ -65,22 +62,13 @@
                 <div class="card-body">
 
                     <ul class="list-group">
+                        {% for comment in comment_list %}
                         <li class="list-group-item">
                             <span class="badge">14</span>
-                            Cras justo odio
+                            {{ comment.content }}
                         </li>
-                        <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Cras justo odio
-                        </li>
-                        <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Cras justo odio
-                        </li>
-                        <li class="list-group-item">
-                            <span class="badge">14</span>
-                            Cras justo odio
-                        </li>
+                        {% endfor %}
+
                     </ul>
                 </div>
             </div>

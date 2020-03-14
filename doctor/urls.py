@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^checkReg/', views.check_reg),
     url(r'^visit/(\w+)', views.visit),
     url(r'^checkInfo/', views.check_info),
+    url(r'^view_comment/', views.view_comment),
 
 
 

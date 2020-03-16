@@ -42,12 +42,12 @@
                                     {% if obj.visitState %}
                                         <h4>患者已就诊</h4>
                                     {% elif obj.regState %}
-                                        <button onclick="showModal_reg(x={{ obj.patients.pName }},
-                                                {#pTel={{ obj.patients.pTel }},#}
-                                                {#pEmail={{ obj.patients.pEmail }},#}
-                                                {#pIdCard={{ obj.patients.pIdCard }},#}
-                                                {#pGender={{ obj.patients.pGender.gender }},#}
-                                                {#balance={{ obj.patients.balance }}#}
+                                        <button onclick="showModal_reg(x='{{ obj.patients.pName }}',
+                                                pTel='{{ obj.patients.pTel }}',
+                                                pEmail='{{ obj.patients.pEmail }}',
+                                                pIdCard='{{ obj.patients.pIdCard }}',
+                                                pGender='{{ obj.patients.pGender.gender }}',
+                                                balance='{{ obj.patients.balance }}'
                                                 )" type="button"
                                                 class="btn btn-primary"
                                                 style="background-color:blue">
@@ -79,30 +79,60 @@
     </div>
 
     <div id="shadow_re" class="myShadow hide"></div>
-    <div id="withdraw_modal" class="myModal hide">
+    <div id="withdraw_modal" class="myModal1 hide">
         <div class="modal-header">
-            <h4 class="modal-title" style="float: left">退号</h4>
+            <h4 class="modal-title" style="float: left">患者信息</h4>
         </div>
         <div class="modal-body">
-            <p>你确定要退号吗？</p>
+            <div class="row">
+                <div class="col-md-8">姓名：</div>
+                <div class="col-md-4">
+{#                    <input>#}
+                    <p id="pName"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">手机号码：</div>
+                <div class="col-md-4">
+                    <p id="pTel"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">邮箱账号：</div>
+                <div class="col-md-4"><p id="pEmail"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">身份证号：</div>
+                <div class="col-md-4"><p id="pIdCard"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">性别：</div>
+                <div class="col-md-4">
+                    <p id="pGender"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">账户余额：</div>
+                <div class="col-md-4"><p id="balance"></p></div>
+            </div>
         </div>
-        <form method="post" action="/patient/withdrawNum/">
-            <input type="hidden" id="regId" name="regId">
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal_reg();">取消</button>
-            <button type="submit" class="btn btn-primary">确定
-            </button>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="CancelModal_reg();">返回</button>
+{#            <button type="button" class="btn btn-primary" onclick="window.location.href='/patient/editInfo/'">修改#}
+{#            </button>#}
         </div>
-        </form>
-
-
     </div>
     <!-- Modal -->
     <script>
-        function showModal_reg(x) {
+        function showModal_reg(pName,pTel,pEmail,pIdCard,pGender,balance) {
             document.getElementById('shadow_re').classList.remove('hide');
             document.getElementById('withdraw_modal').classList.remove('hide');
-            $('#regId').val(x);
+            $('#pName').html(pName);
+            $('#pTel').html(pTel);
+            $('#pEmail').html(pEmail);
+            $('#pIdCard').html(pIdCard);
+            $('#pGender').html(pGender);
+            $('#balance').html(balance);
         }
 
         function CancelModal_reg() {

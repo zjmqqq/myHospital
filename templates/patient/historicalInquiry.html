@@ -23,22 +23,16 @@
                                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                     {% if obj.evaluateState %}
                                         <button onclick="window.location.href='/patient/myEval/' "
-                                                type="button" class="btn btn-primary" style="background-color:blue">
+                                                type="button" class="btn btn-success" >
                                             查看评价
                                         </button>
-                                        <button type="button" class="btn btn-success"
-                                                onclick="showModal_reg(x={{ obj.rId }})">
-                                            查看详情
-                                        </button>
+
                                     {% else %}
                                         <button onclick="window.location.href='/patient/evaluate?id={{ obj.rId }}' "
                                                 type="button" class="btn btn-primary" style="background-color:blue">
                                             立即评价
                                         </button>
-                                        <button type="button" class="btn btn-success"
-                                                onclick="showModal_reg(x={{ obj.rId }})">
-                                            查看详情
-                                        </button>
+
                                     {% endif %}
                                 </div>
                             </div>
@@ -57,35 +51,6 @@
     </div>
 
     <!-- 按钮触发模态框 -->
-    <div id="shadow_re" class="myShadow hide"></div>
-    <div id="withdraw_modal" class="myModal hide">
-        <div class="modal-header">
-            <h4 class="modal-title" style="float: left">退号</h4>
-        </div>
-        <div class="modal-body">
-            <p>你确定要退号吗？</p>
-        </div>
-        <form method="post" action="/patient/withdrawNum/">
-            <input type="hidden" id="regId" name="regId">
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal_reg();">取消</button>
-            <button type="submit" class="btn btn-primary">确定
-            </button>
-        </div>
-        </form>
 
 
-    </div>
-    <script>
-        function showModal_reg(x) {
-            document.getElementById('shadow_re').classList.remove('hide');
-            document.getElementById('withdraw_modal').classList.remove('hide');
-            $('#regId').val(x);
-        }
-        function CancelModal_reg() {
-            document.getElementById('shadow_re').classList.add('hide');
-            document.getElementById('withdraw_modal').classList.add('hide');
-            {#document.getElementById('editModal').classList.add('hide');#}
-        }
-    </script>
 {% endblock %}

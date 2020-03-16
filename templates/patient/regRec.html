@@ -22,7 +22,9 @@
                             <div class="col-md-10"><h4>部门名称：{{ obj.department.departmentName }} <br> 医生名称：{{ obj.doctor.dName }}
                             </h4><br></div>
                             <div class="col-md-2">
-                                {% if obj.regState %}
+                                {% if obj.visitState %}
+                                    <h4 class="m-0 font-weight-bold text-primary" style="float: right">已就诊</h4>
+                                {% elif obj.regState%}
                                     <h4 class="m-0 font-weight-bold text-primary" style="float: right">预约成功</h4>
                                 {% else %}
                                     <h4 class="m-0 font-weight-bold text-primary" style="float: right">已退号</h4>
@@ -33,7 +35,13 @@
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                    {% if obj.regState %}
+                                    {% if obj.visitState %}
+                                        <button onclick="window.location.href='/patient/historicalInquiry/' " type="button" class="btn btn-success"
+                                                >
+                                            查看历史问诊
+                                        </button>
+
+                                    {% elif obj.regState %}
                                         <button onclick="showModal_reg(x={{ obj.rId }})" type="button" class="btn btn-primary"
                                                 style="background-color:blue">
                                             退号
@@ -86,11 +94,7 @@
         function showModal_reg(x) {
             document.getElementById('shadow_re').classList.remove('hide');
             document.getElementById('withdraw_modal').classList.remove('hide');
-
-
-
             $('#regId').val(x);
-
         }
 
         function CancelModal_reg() {

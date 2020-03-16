@@ -42,7 +42,13 @@
                                     {% if obj.visitState %}
                                         <h4>患者已就诊</h4>
                                     {% elif obj.regState %}
-                                        <button onclick="showModal_reg(x={{ obj.rId }})" type="button"
+                                        <button onclick="showModal_reg(x={{ obj.patients.pName }},
+                                                {#pTel={{ obj.patients.pTel }},#}
+                                                {#pEmail={{ obj.patients.pEmail }},#}
+                                                {#pIdCard={{ obj.patients.pIdCard }},#}
+                                                {#pGender={{ obj.patients.pGender.gender }},#}
+                                                {#balance={{ obj.patients.balance }}#}
+                                                )" type="button"
                                                 class="btn btn-primary"
                                                 style="background-color:blue">
                                             查看患者信息
@@ -71,4 +77,45 @@
             </div>
         {% endfor %}
     </div>
+
+    <div id="shadow_re" class="myShadow hide"></div>
+    <div id="withdraw_modal" class="myModal hide">
+        <div class="modal-header">
+            <h4 class="modal-title" style="float: left">退号</h4>
+        </div>
+        <div class="modal-body">
+            <p>你确定要退号吗？</p>
+        </div>
+        <form method="post" action="/patient/withdrawNum/">
+            <input type="hidden" id="regId" name="regId">
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal_reg();">取消</button>
+            <button type="submit" class="btn btn-primary">确定
+            </button>
+        </div>
+        </form>
+
+
+    </div>
+    <!-- Modal -->
+    <script>
+        function showModal_reg(x) {
+            document.getElementById('shadow_re').classList.remove('hide');
+            document.getElementById('withdraw_modal').classList.remove('hide');
+            $('#regId').val(x);
+        }
+
+        function CancelModal_reg() {
+            document.getElementById('shadow_re').classList.add('hide');
+            document.getElementById('withdraw_modal').classList.add('hide');
+            {#document.getElementById('editModal').classList.add('hide');#}
+
+        }
+
+
+
+
+    </script>
+
+
 {% endblock %}

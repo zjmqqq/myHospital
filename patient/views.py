@@ -167,70 +167,70 @@ def add_data(request):
     # for i in range(50):
     #     name = '科室'+str(i)
     #     models.department.objects.create(departmentName=name)
-    import random
-    for i in range(100):
-        name = 'doctor' + str(i) + '医生'
-        IdCard = str(331082199809140000+i)
-        Tel = str(13958590000+i)
-        department_id = random.randint(1,10)
-        registrationType_id = random.randint(1,2)
-        models.doctor.objects.create(dName=name,dPassword=123456,
-                                     dGender='男',dIdcard=IdCard,
-                                     dBirthday='19890612',dTel=Tel,
-                                     department_id=department_id,
-                                     registrationType_id=registrationType_id,
-                                     dIntroduce='医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。按照卫生部、卫健委、医政部有关医疗卫生管理条例的法律法规，主持医患沟通，学术讨论，新技术推广、预后分析、公众教育、护理示教、康复培训、出院教育、执行卫生防疫、计生、大病早期识别干预等法律政治责任、承担部分课题研究等工作，预防出生缺陷提高人口素质，治病救人，履行病情如实告知、合理检查、合理开药、正确诊断，积极治疗的责任。',
-                                     dSpecial='This utility animates the CSS transform property,meaning it will override any existing transforms on an element being animated!In this theme')
-    # 查询 queryset = [obj1,obj2,...]  正向操作
-    # result = models.userInfo.objects.all()
-    # for obj in result:
-    #     print(obj.name,obj.age,obj.ut_id_id,obj.ut_id.title)
-
-    # 表明小写_set.all()反向操作
-    # obj = models.userType.objects.all().first()
-    # print(type(obj),obj.title,)
-    # for row in obj.userinfo_set.all():
-    #     print(row.id,row.name,row.age)
-    # queryset  result = models.userInfo.objects.all()
-    #            result = models.userInfo.objects.filter()
-    # 字典result = models.userInfo.objects.all().values('id','name','ut_id__title')
-    # 元祖result = models.userInfo.objects.all().values_list('id','name')
+    # import random
+    # for i in range(100):
+    #     name = 'doctor' + str(i) + '医生'
+    #     IdCard = str(331082199809140000+i)
+    #     Tel = str(13958590000+i)
+    #     department_id = random.randint(1,10)
+    #     registrationType_id = random.randint(1,2)
+    #     models.doctor.objects.create(dName=name,dPassword=123456,
+    #                                  dGender='男',dIdcard=IdCard,
+    #                                  dBirthday='19890612',dTel=Tel,
+    #                                  department_id=department_id,
+    #                                  registrationType_id=registrationType_id,
+    #                                  dIntroduce='医生，钻研学习医学科学技术，挽救生命以治病为业的人，一般指临床医生。按照卫生部、卫健委、医政部有关医疗卫生管理条例的法律法规，主持医患沟通，学术讨论，新技术推广、预后分析、公众教育、护理示教、康复培训、出院教育、执行卫生防疫、计生、大病早期识别干预等法律政治责任、承担部分课题研究等工作，预防出生缺陷提高人口素质，治病救人，履行病情如实告知、合理检查、合理开药、正确诊断，积极治疗的责任。',
+    #                                  dSpecial='This utility animates the CSS transform property,meaning it will override any existing transforms on an element being animated!In this theme')
+    # # 查询 queryset = [obj1,obj2,...]  正向操作
+    # # result = models.userInfo.objects.all()
+    # # for obj in result:
+    # #     print(obj.name,obj.age,obj.ut_id_id,obj.ut_id.title)
     #
-    # from django.db.models import Count
-    # v = models.userInfo.objects.values('ut_id_id').annotate(num=Count('id')).filter(num__gt=2)
-    # models.userInfo.objects.filter(id__gt=1)
-    # models.userInfo.objects.filter(id__lt=1)
-    # models.userInfo.objects.filter(id__gte=1)
-    # models.userInfo.objects.filter(id__lte=1)
-    # models.userInfo.objects.filter(id__in=[1, 2, 3])
-    # models.userInfo.objects.filter(id__range=[1, 4])
-    # models.userInfo.objects.filter(name__startswith='xxx')
-    # models.userInfo.objects.filter(name__endwith='xxx')
-    # models.userInfo.objects.filter(name__contains='xxx')
-    # models.userInfo.objects.exclude(id=1)
-    # print(v)
-    # print(v.query)
-
-    # dict = {'pName': '李白', 'pPassword': 'qqqqqqqq', 'pEmail': '1170217264@qq.com',
-    # 'pTel': '15168672222', 'pGender_id': 1,
-    #  'pIdCard': '331082199809143488'}
-    # models.patients.objects.create(**dict)
-    # F 在跟新时取得原来的值
-    # Q的作用
-    # condition_dict = {
-    #     'k1': [1, 2, 3, 4],
-    #     'k2': [1, ],
-    #     'k3': [1, 2, 3]
-    # }
-    # from django.db.models import Q
-    # con = Q()
-    # for k, v in condition_dict.items():
-    #     q = Q()
-    #     q.connector = 'OR'
-    #     for i in v:
-    #         q.children.append('id', i)
-    #     con.add(q, 'AND')
-    # models.doctor.objects.filter(con)
+    # # 表明小写_set.all()反向操作
+    # # obj = models.userType.objects.all().first()
+    # # print(type(obj),obj.title,)
+    # # for row in obj.userinfo_set.all():
+    # #     print(row.id,row.name,row.age)
+    # # queryset  result = models.userInfo.objects.all()
+    # #            result = models.userInfo.objects.filter()
+    # # 字典result = models.userInfo.objects.all().values('id','name','ut_id__title')
+    # # 元祖result = models.userInfo.objects.all().values_list('id','name')
+    # #
+    # # from django.db.models import Count
+    # # v = models.userInfo.objects.values('ut_id_id').annotate(num=Count('id')).filter(num__gt=2)
+    # # models.userInfo.objects.filter(id__gt=1)
+    # # models.userInfo.objects.filter(id__lt=1)
+    # # models.userInfo.objects.filter(id__gte=1)
+    # # models.userInfo.objects.filter(id__lte=1)
+    # # models.userInfo.objects.filter(id__in=[1, 2, 3])
+    # # models.userInfo.objects.filter(id__range=[1, 4])
+    # # models.userInfo.objects.filter(name__startswith='xxx')
+    # # models.userInfo.objects.filter(name__endwith='xxx')
+    # # models.userInfo.objects.filter(name__contains='xxx')
+    # # models.userInfo.objects.exclude(id=1)
+    # # print(v)
+    # # print(v.query)
+    #
+    # # dict = {'pName': '李白', 'pPassword': 'qqqqqqqq', 'pEmail': '1170217264@qq.com',
+    # # 'pTel': '15168672222', 'pGender_id': 1,
+    # #  'pIdCard': '331082199809143488'}
+    # # models.patients.objects.create(**dict)
+    # # F 在跟新时取得原来的值
+    # # Q的作用
+    # # condition_dict = {
+    # #     'k1': [1, 2, 3, 4],
+    # #     'k2': [1, ],
+    # #     'k3': [1, 2, 3]
+    # # }
+    # # from django.db.models import Q
+    # # con = Q()
+    # # for k, v in condition_dict.items():
+    # #     q = Q()
+    # #     q.connector = 'OR'
+    # #     for i in v:
+    # #         q.children.append('id', i)
+    # #     con.add(q, 'AND')
+    # # models.doctor.objects.filter(con)
     return HttpResponse('...')
 
 
@@ -572,7 +572,7 @@ def confirm(request, s_id):
         elif re_info_list[4] == 'p_16_30':
             models.contreteTime_p.objects.filter(ctId=ct_id).update(p_16_30=False)
 
-        return redirect('/patient/index_pat/')
+        return redirect('/patient/regRec/')
 
 
 @base.checkLogin_p
@@ -589,14 +589,14 @@ def reg_rec(request):
     if day1:
         day1 = int(day1)
         print(day_list[day1])
-        reg_list = models.registration.objects.filter(patients__pId=p_id, regTime=day_list[day1])
+        reg_list = models.registration.objects.filter(patients__pId=p_id, regTime=day_list[day1]).order_by('-regTime')
         print(reg_list)
         return render(request, 'patient/regRec.html', {'reg_list': reg_list,
                                                        'day_dic': day_dic,
                                                        'obj': obj,
                                                        })
     else:
-        reg_list = models.registration.objects.filter(patients__pId=p_id)
+        reg_list = models.registration.objects.filter(patients__pId=p_id).order_by('-regTime')
         return render(request, 'patient/regRec.html', {'reg_list': reg_list,
                                                        'day_dic': day_dic,
                                                        'obj': obj,
@@ -618,7 +618,7 @@ def withdraw_num(request):
 def historical_inquiry(request):
     p_id = request.session.get('pId')
     obj = models.patients.objects.get(pId=p_id)
-    his_list = models.registration.objects.filter(patients_id=p_id, visitState=True)
+    his_list = models.registration.objects.filter(patients_id=p_id, visitState=True).order_by('-regTime')
     print(his_list)
     return render(request, 'patient/historicalInquiry.html', {'obj': obj,
                                                               'his_list': his_list,

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-from patient import views as pv
+from hospital import views as hos
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'doctor/', include('doctor.urls')),
     url(r'captcha/', include('captcha.urls')),
     url(r'hospital/', include('hospital.urls')),
+    # url(r'^', hos.index),
     # url(r'', pv.index),
 ]
 

@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'doctor/', include('doctor.urls')),
     url(r'captcha/', include('captcha.urls')),
     url(r'hospital/', include('hospital.urls')),
-    # url(r'^', hos.index),
+    url(r'^', hos.index),
     # url(r'', pv.index),
 ]
 

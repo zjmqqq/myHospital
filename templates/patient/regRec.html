@@ -3,9 +3,12 @@
     <div class="container-fluid">
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="/patient/regRec/">全部</a></li>
+
             {% for key,value in day_dic.items %}
-                <li role="presentation"><a href="/patient/regRec?day={{ value }}" id="{{ value }}">{{ key }}</a></li>
+                <li role="presentation"><a href="/patient/regRec/?day={{ value }}" id="{{ value }}">{{ key }}</a></li>
             {% endfor %}
+            <li role="presentation" ><a href="/patient/regRec/?day=8">已退号</a></li>
+            <li role="presentation" ><a href="/patient/regRec/?day=-1">历史预约</a></li>
         </ul>
     </div>
     <div class="container-fluid">
@@ -46,9 +49,12 @@
                                                 style="background-color:blue">
                                             退号
                                         </button>
-                                        <button type="button" class="btn btn-success">支付</button>
+{#                                        <button type="button" class="btn btn-success">支付</button>#}
                                     {% else %}
-                                        <h4>您已退号成功</h4>
+                                       <button type="button" class="btn btn-warning"
+                                                >
+                                            您已退号成功
+                                        </button>
                                     {% endif %}
                                 </div>
                             </div>
@@ -65,10 +71,24 @@
                 </div>
 
             </div>
+        {% empty %}
+            <h3>没有数据</h3>
         {% endfor %}
     </div>
     <!-- Fade In Utility -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-5"></div>
+            <div class="col-sm-12 col-md-7">
+                <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {{ page_info.pager|safe }}
+                </ul>
+            </nav>
+            </div>
+        </div>
 
+    </div>
     <!-- 按钮触发模态框 -->
     <div id="shadow_re" class="myShadow hide"></div>
     <div id="withdraw_modal" class="myModal hide">

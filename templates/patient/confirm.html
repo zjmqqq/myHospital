@@ -1,64 +1,109 @@
 {% extends 'patient/mother_pat.html' %}
 {% block content %}
-    <ol class="breadcrumb">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
             {{ li|safe }}
         </ol>
-<form class="form-horizontal" method="post" action="/patient/confirm/{{ scheduling.sId }}/">
-  <div class="form-group">
-    <label class="col-sm-2 control-label">医生姓名</label>
-    <div class="col-sm-10">
-      <p class="form-control-static">{{ doc.dName }}</p>
     </div>
-  </div>
-    <div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">医生类型</label>
-    <div class="col-sm-8">
-      <input type="text"  class="form-control" id="inputPassword" placeholder="{{ registerType.type }}" disabled>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">所属部门</label>
-    <div class="col-sm-8">
-      <input type="text"  class="form-control" id="inputPassword" placeholder="{{ dep.departmentName }}" disabled>
-    </div>
-  </div>
-<div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">就诊日期</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control" id="inputPassword" placeholder="{{ scheduling.sTime }}" disabled>
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">就诊具体时间</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control" id="inputPassword" placeholder="{{ time1 }}" disabled>
-    </div>
-  </div>
-<div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">就诊费</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control" id="inputPassword" placeholder="Password" disabled>
-    </div>
-  </div>
-<div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">就诊人</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control" id="inputPassword" placeholder="{{ pat.pName }}" disabled>
-    </div>
-  </div>
-<div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">就诊人卡号</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control" id="inputPassword" placeholder="{{ pat.pIdCard }}" disabled>
-    </div>
-  </div>
-    <input type="hidden" name="reInfo" value="{{ doc.dId }}+{{ dep.departmentId }}+{{ registerType.tId }}+{{ scheduling.sId }}+{{ time1 }}" >
-    <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">确认</button>
-        <a class="btn btn-default" href="#" role="button">取消</a>
-    </div>
-  </div>
+    <div class="container-fluid">
+        <form class="form-horizontal" method="post" action="/patient/confirm/{{ scheduling.sId }}/">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">医生姓名</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{ doc.dName }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">医生类型</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="{{ registerType.type }}"
+                           disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">所属部门</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="{{ dep.departmentName }}"
+                           disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">就诊日期</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="{{ scheduling.sTime }}"
+                           disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">就诊具体时间</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="{{ time1 }}" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">就诊费</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="Password" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">就诊人</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="{{ pat.pName }}" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">就诊人卡号</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputPassword" placeholder="{{ pat.pIdCard }}" disabled>
+                </div>
+            </div>
+            <input type="hidden" name="reInfo"
+                   value="{{ doc.dId }}+{{ dep.departmentId }}+{{ registerType.tId }}+{{ scheduling.sId }}+{{ time1 }}">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">确认</button>
+                    <a class="btn btn-default" onclick="showModal_cancel()"  role="button">取消</a>
+                </div>
+            </div>
 
-</form>
+        </form>
+    </div>
+    <div id="shadow_re" class="myShadow hide"></div>
+    <div id="cancel_modal" class="myModal1 hide">
+        <div class="modal-header">
+            <h4 class="modal-title" style="float: left">取消预约</h4>
+        </div>
+        <div class="modal-body">
+            <p>你确定要取消预约吗？将返回咨询页。</p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CancelModal_cancel();">
+                取消
+            </button>
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/patient/index_pat/'">
+                确定
+            </button>
+        </div>
+
+
+
+    </div>
+    <!-- Modal -->
+    <script>
+        function showModal_cancel() {
+            document.getElementById('shadow_re').classList.remove('hide');
+            document.getElementById('cancel_modal').classList.remove('hide');
+        }
+
+        function CancelModal_cancel() {
+            document.getElementById('shadow_re').classList.add('hide');
+            document.getElementById('cancel_modal').classList.add('hide');
+            {#document.getElementById('editModal').classList.add('hide');#}
+
+        }
+
+
+    </script>
 {% endblock %}

@@ -587,17 +587,38 @@ def reg_rec(request):
     for index, day in enumerate(day_list):
         day_dic[day] = index
     if day1:
-        day1 = int(day1)
-        print(day_list[day1])
-        reg_list = models.registration.objects.filter(patients__pId=p_id, regTime=day_list[day1]).order_by('-regTime')
-        print(reg_list)
-        return render(request, 'patient/regRec.html', {'reg_list': reg_list,
-                                                       'day_dic': day_dic,
-                                                       'obj': obj,
-                                                       })
+        if day1 == '8':
+            reg_list = models.registration.objects.filter(patients__pId=p_id, regState=0).order_by(
+                '-regTime')
+            print(reg_list)
+            return render(request, 'patient/regRec.html', {'reg_list': reg_list,
+                                                           'day_dic': day_dic,
+                                                           'obj': obj,
+                                                           })
+        elif day1 == '-1':
+            reg_list = models.registration.objects.filter(patients__pId=p_id, regTime__lt=day_list[0]).order_by(
+                '-regTime')
+            print(reg_list)
+            return render(request, 'patient/regRec.html', {'reg_list': reg_list,
+                                                           'day_dic': day_dic,
+                                                           'obj': obj,
+                                                           })
+        else:
+            day1 = int(day1)
+            print(day_list[day1])
+            reg_list = models.registration.objects.filter(patients__pId=p_id, regTime=day_list[day1]).order_by('-regTime')
+            print(reg_list)
+            return render(request, 'patient/regRec.html', {'reg_list': reg_list,
+                                                           'day_dic': day_dic,
+                                                           'obj': obj,
+                                                           })
     else:
-        reg_list = models.registration.objects.filter(patients__pId=p_id).order_by('-regTime')
+        page_count = models.registration.objects.filter(patients__pId=p_id).count()
+        page_info = Pager.PageInfo(request.GET.get('page'), 4, page_count, 5, '/patient/regRec/')
+        reg_list = models.registration.objects.filter(patients__pId=p_id).order_by('-regTime')[page_info.start(): page_info.end()]
+        # reg_list = models.registration.objects.filter(patients__pId=p_id).order_by('-regTime')
         return render(request, 'patient/regRec.html', {'reg_list': reg_list,
+                                                       'page_info': page_info,
                                                        'day_dic': day_dic,
                                                        'obj': obj,
                                                        })
@@ -618,10 +639,13 @@ def withdraw_num(request):
 def historical_inquiry(request):
     p_id = request.session.get('pId')
     obj = models.patients.objects.get(pId=p_id)
-    his_list = models.registration.objects.filter(patients_id=p_id, visitState=True).order_by('-regTime')
-    print(his_list)
+    page_count = models.registration.objects.filter(patients_id=p_id, visitState=True).count()
+    page_info = Pager.PageInfo(request.GET.get('page'), 4, page_count, 3, '/patient/historicalInquiry/')
+    his_list = models.registration.objects.filter(patients_id=p_id, visitState=True).order_by('-regTime')[page_info.start(): page_info.end()]
+    # his_list = models.registration.objects.filter(patients_id=p_id, visitState=True).order_by('-regTime')
     return render(request, 'patient/historicalInquiry.html', {'obj': obj,
                                                               'his_list': his_list,
+                                                              'page_info': page_info,
                                                               })
 
 

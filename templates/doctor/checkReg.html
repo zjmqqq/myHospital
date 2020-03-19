@@ -7,7 +7,7 @@
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="/doctor/checkReg/">全部</a></li>
             {% for key,value in day_dic.items %}
-                <li role="presentation"><a href="/doctor/checkReg?day={{ value }}" id="{{ value }}">{{ key }}</a></li>
+                <li role="presentation"><a href="/doctor/checkReg/?day={{ value }}" id="{{ value }}">{{ key }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -75,6 +75,8 @@
                 </div>
 
             </div>
+            {% empty %}
+            <h3>没有患者预约</h3>
         {% endfor %}
     </div>
 
